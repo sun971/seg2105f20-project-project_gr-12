@@ -79,16 +79,16 @@ public class Login extends AppCompatActivity {
 
                             Toast.makeText(Login.this, "Authentication success.", Toast.LENGTH_LONG).show();
 
-                            Intent redirectToMain = new Intent(Login.this, MainActivity.class);
-                            startActivity(redirectToMain);
+                            Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
+                            startActivity(redirectToWelcome);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Error", "COULD NOT SIGN IN", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_LONG).show();
-                            // ...
+
                         }
 
-                        // ...
+
                     }
                 });
             }
