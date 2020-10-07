@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
             String email = emailField.getText().toString();
             String password = passwordField.getText().toString();
 
-            if(email.equals("") || email.equals(null) || password.equals("") || password.equals(null))
+            if(email.equals("") || password.equals(""))
             {
                 Toast.makeText(Login.this, "One or more fields has no value.", Toast.LENGTH_LONG).show();
             }
