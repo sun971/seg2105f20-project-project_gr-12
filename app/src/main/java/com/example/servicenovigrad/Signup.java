@@ -34,6 +34,10 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mAuth.signOut();
+        }
     }
 
     public void onStart()   {
@@ -49,7 +53,6 @@ public class Signup extends AppCompatActivity {
     }
 
     public void onClickSignup(View view) {
-        boolean validCredentials = true;
 
         EditText firstNameField = (EditText)findViewById(R.id.signupFirstName);
         EditText lastNameField = (EditText)findViewById(R.id.signupLastName);
@@ -66,98 +69,77 @@ public class Signup extends AppCompatActivity {
         String password = passwordField.getText().toString();
         String accountType = "";
 
-        if (firstNameField.equals("") || lastNameField.equals("") || usernameField.equals("") || emailField.equals("") || passwordField.equals("")) {
+        if (firstName.equals("") || lastName.equals("") || username.equals("") || email.equals("") || password.equals("")) {
             //They didnt enter a field.... sned toast notif
             setContentView(R.layout.activity_signup);
             Toast.makeText(getApplicationContext(),"All fields require a value",Toast.LENGTH_LONG).show();
-            validCredentials = false;
-        }
+        } else {
+            if (checkedId != R.id.employeeAccountSelect && checkedId != R.id.customerAccountSelect)  {
+                    setContentView(R.layout.activity_signup);
+                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+            } else{
+                //Attempt to create firebase user
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
-        switch (checkedId) {
-            case R.id.employeeAccountSelect:
-                accountType = "employee";
-                break;
-            case R.id.customerAccountSelect:
-                accountType = "customer";
-                break;
-            default:
-                //send toast notif
-                validCredentials = false;
-                setContentView(R.layout.activity_signup);
-                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
-        }
-
-        /*
-        UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
-        // See the UserRecord reference doc for the contents of userRecord.
-        System.out.println("Successfully fetched user data: " + userRecord.getEmail());
-
-         */
-        
-
-        if email already in authenticator {
-            valid cred = false
-        }
-
-        //Attempt to create firebase user
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()) {
-                            try {
-                                throw task.getException();
-                            } catch(FirebaseAuthWeakPasswordException e) {
-                                //Toast for weak password
-                                setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Weak Password",Toast.LENGTH_LONG).show(); //long
-                            } catch(FirebaseAuthInvalidCredentialsException e) {
-                                //Toast for invalid email
-                                setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_LONG).show();
-                            } catch(FirebaseAuthUserCollisionException e) {
-                                //Toast for existing user with that email
-                                setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Error: Existing user with email",Toast.LENGTH_LONG).show();
-                            } catch(Exception e) {
-                                //Toast for general user auth error
-                                setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(!task.isSuccessful()) {
+                                    try {
+                                        throw task.getException();
+                                    } catch(FirebaseAuthWeakPasswordException e) {
+                                        //Toast for weak password
+                                        setContentView(R.layout.activity_signup);
+                                        Toast.makeText(getApplicationContext(),"Weak Password",Toast.LENGTH_LONG).show(); //long
+                                    } catch(FirebaseAuthInvalidCredentialsException e) {
+                                        //Toast for invalid email
+                                        setContentView(R.layout.activity_signup);
+                                        Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_LONG).show();
+                                    } catch(FirebaseAuthUserCollisionException e) {
+                                        //Toast for existing user with that email
+                                        setContentView(R.layout.activity_signup);
+                                        Toast.makeText(getApplicationContext(),"Error: Existing user with email",Toast.LENGTH_LONG).show();
+                                    } catch(Exception e) {
+                                        //Toast for general user auth error
+                                        setContentView(R.layout.activity_signup);
+                                        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                                    }
+                                }
                             }
-                        }
-                    }
-                });
+                        });
 
-        if email not in authenticator {
-            validCredentials = false
-        }
+                //If account successfully created
+                mAuth.signInWithEmailAndPassword(email, password);
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                if (user != null) {
+                    //SEND CREDENTIALS TO REALTIME DATABASE
+                    //return user to login page
+                    String userId = user.getUid();
+                    DatabaseReference newUserFirstNameRef = mDatabase.getReference("users/" + userId + "/firstName");
+                    DatabaseReference newUserLastNameRef = mDatabase.getReference("users/" + userId + "/lastName");
+                    DatabaseReference newUserEmailRef = mDatabase.getReference("users/" + userId + "/email");
+                    DatabaseReference newUserUsernameRef = mDatabase.getReference("users/" + userId + "/username");
+                    DatabaseReference newUserPasswordRef = mDatabase.getReference("users/" + userId + "/password");
+                    DatabaseReference newUserAccountTypeRef = mDatabase.getReference("users/" + userId + "/accountType");
+
+                    newUserFirstNameRef.setValue(firstName);
+                    newUserLastNameRef.setValue(lastName);
+                    newUserEmailRef.setValue(email);
+                    newUserUsernameRef.setValue(username);
+                    newUserPasswordRef.setValue(password);
+                    newUserAccountTypeRef.setValue(accountType);
+
+                    Intent loginIntent = new Intent(this, Login.class);
+
+                    startActivity(loginIntent);
+                }
 
 
 
-        //If account successfully created
-        if (validCredentials) {
-            //SEND CREDENTIALS TO REALTIME DATABASE
-            //return user to login page
-            FirebaseUser user = mAuth.getCurrentUser();
-            String userId = user.getUid();
-            DatabaseReference newUserFirstNameRef = mDatabase.getReference("users/" + userId + "/firstName");
-            DatabaseReference newUserLastNameRef = mDatabase.getReference("users/" + userId + "/lastName");
-            DatabaseReference newUserEmailRef = mDatabase.getReference("users/" + userId + "/email");
-            DatabaseReference newUserUsernameRef = mDatabase.getReference("users/" + userId + "/username");
-            DatabaseReference newUserPasswordRef = mDatabase.getReference("users/" + userId + "/password");
-            DatabaseReference newUserAccountTypeRef = mDatabase.getReference("users/" + userId + "/accountType");
 
-            newUserFirstNameRef.setValue(firstName);
-            newUserLastNameRef.setValue(lastName);
-            newUserEmailRef.setValue(email);
-            newUserUsernameRef.setValue(username);
-            newUserPasswordRef.setValue(password);
-            newUserAccountTypeRef.setValue(accountType);
 
-            Intent loginIntent = new Intent(this, Login.class);
-
-            startActivity(loginIntent);
+            }
         }
     }
 }

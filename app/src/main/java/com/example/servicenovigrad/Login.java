@@ -36,10 +36,11 @@ public class Login extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = session.getCurrentUser();
 
+
         if(currentUser != null)
         {
-            Intent intent = new Intent(this, WelcomePage.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, WelcomePage.class);
+            //startActivity(intent);
             //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
         }
         else
@@ -79,7 +80,7 @@ public class Login extends AppCompatActivity {
 
                             Toast.makeText(Login.this, "Authentication success.", Toast.LENGTH_LONG).show();
 
-                            Intent redirectToMain = new Intent(Login.this, MainActivity.class);
+                            Intent redirectToMain = new Intent(Login.this, WelcomePage.class);
                             startActivity(redirectToMain);
                         } else {
                             // If sign in fails, display a message to the user.
