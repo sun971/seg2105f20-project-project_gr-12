@@ -84,6 +84,8 @@ public class Signup extends AppCompatActivity {
             default:
                 //send toast notif
                 validCredentials = false;
+                setContentView(R.layout.activity_signup);
+                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
         }
 
         //Attempt to create firebase user
@@ -97,12 +99,20 @@ public class Signup extends AppCompatActivity {
                                 throw task.getException();
                             } catch(FirebaseAuthWeakPasswordException e) {
                                 //Toast for weak password
+                                setContentView(R.layout.activity_signup);
+                                Toast.makeText(getApplicationContext(),"Weak Password",Toast.LENGTH_SHORT).show();
                             } catch(FirebaseAuthInvalidCredentialsException e) {
                                 //Toast for invalid email
+                                setContentView(R.layout.activity_signup);
+                                Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_SHORT).show();
                             } catch(FirebaseAuthUserCollisionException e) {
                                 //Toast for existing user with that email
+                                setContentView(R.layout.activity_signup);
+                                Toast.makeText(getApplicationContext(),"Error: Existing user with email",Toast.LENGTH_SHORT).show();
                             } catch(Exception e) {
                                 //Toast for general user auth error
+                                setContentView(R.layout.activity_signup);
+                                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
