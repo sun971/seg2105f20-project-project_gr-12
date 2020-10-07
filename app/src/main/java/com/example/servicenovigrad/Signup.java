@@ -74,7 +74,7 @@ public class Signup extends AppCompatActivity {
                     setContentView(R.layout.activity_signup);
                     Toast.makeText(getApplicationContext(),"Please enter an account type",Toast.LENGTH_LONG).show();
             } else{
-                if (checkedId != R.id.employeeAccountSelect) {
+                if (checkedId == R.id.employeeAccountSelect) {
                     accountType = "employee";
                 } else {
                     accountType = "customer";
