@@ -67,6 +67,7 @@
         android:layout_height="70dp"
         android:background="@drawable/round_button"
         android:gravity="center_vertical|center_horizontal"
+        android:onClick="login"
         android:text="Sign in"
         android:textColor="#F1EFF4"
         app:layout_constraintBottom_toBottomOf="parent"
