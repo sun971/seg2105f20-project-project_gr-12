@@ -38,7 +38,8 @@ public class Login extends AppCompatActivity {
 
         if(currentUser != null)
         {
-            Log.d("Session","User logged in: "+ currentUser);
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
             //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
         }
         else
@@ -77,6 +78,9 @@ public class Login extends AppCompatActivity {
                             Log.d("Session",user.toString());
 
                             Toast.makeText(Login.this, "Authentication success.", Toast.LENGTH_LONG).show();
+
+                            Intent redirectToMain = new Intent(Login.this, MainActivity.class);
+                            startActivity(redirectToMain);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Error", "COULD NOT SIGN IN", task.getException());

@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.d("Msg","No one signed in");
 
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
+
         }
 
     }
