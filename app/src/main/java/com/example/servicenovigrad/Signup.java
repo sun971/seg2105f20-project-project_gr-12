@@ -34,10 +34,6 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            mAuth.signOut();
-        }
     }
 
     public void onStart()   {
@@ -76,8 +72,14 @@ public class Signup extends AppCompatActivity {
         } else {
             if (checkedId != R.id.employeeAccountSelect && checkedId != R.id.customerAccountSelect)  {
                     setContentView(R.layout.activity_signup);
-                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter an account type",Toast.LENGTH_LONG).show();
             } else{
+                if (checkedId != R.id.employeeAccountSelect) {
+                    accountType = "employee";
+                } else {
+                    accountType = "customer";
+                }
+
                 //Attempt to create firebase user
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -109,7 +111,6 @@ public class Signup extends AppCompatActivity {
                         });
 
                 //If account successfully created
-                mAuth.signInWithEmailAndPassword(email, password);
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 if (user != null) {
