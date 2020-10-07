@@ -14,10 +14,10 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <TextView
         android:id="@+id/serviceNovigradText"
@@ -27,10 +27,10 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.215" />
+        app:layout_constraintVertical_bias="0.17" />
 
     <EditText
         android:id="@+id/signupLastName"
@@ -44,7 +44,7 @@
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.388" />
+        app:layout_constraintVertical_bias="0.343" />
 
     <EditText
         android:id="@+id/signupFirstName"
@@ -58,18 +58,17 @@
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304" />
+        app:layout_constraintVertical_bias="0.261" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/accountTypeRadioGroup"
         android:layout_width="253dp"
         android:layout_height="101dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.709">
+        app:layout_constraintVertical_bias="0.726">
 
         <TextView
             android:id="@+id/accountTypeText"
@@ -88,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Customer" />
+
     </RadioGroup>
 
     <EditText
@@ -99,10 +99,24 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <EditText
+        android:id="@+id/signupPassword"
+        android:layout_width="252dp"
+        android:layout_height="42dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.577" />
 
     <EditText
         android:id="@+id/signupUsername"
@@ -116,7 +130,7 @@
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintVertical_bias="0.423" />
 
     <Button
         android:id="@+id/btnCreateAccount"
@@ -124,15 +138,15 @@
         android:layout_height="70dp"
         android:background="@drawable/round_button"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="signup"
+        android:onClick="onClickSignup"
         android:text="Sign Up"
         android:textColor="#F1EFF4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.872" />
+        app:layout_constraintVertical_bias="0.903" />
 
     <Button
         android:id="@+id/btnSigninPage"
