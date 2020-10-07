@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
 
         if(currentUser != null)
         {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WelcomePage.class);
             startActivity(intent);
             //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
         }
