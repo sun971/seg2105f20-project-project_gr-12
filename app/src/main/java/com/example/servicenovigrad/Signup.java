@@ -64,6 +64,8 @@ public class Signup extends AppCompatActivity {
 
         if (firstNameField == null || lastNameField == null || usernameField == null || emailField == null || passwordField == null) {
             //They didnt enter a field.... sned toast notif
+            setContentView(R.layout.activity_signup);
+            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
             validCredentials = false;
         }
 
@@ -85,7 +87,7 @@ public class Signup extends AppCompatActivity {
                 //send toast notif
                 validCredentials = false;
                 setContentView(R.layout.activity_signup);
-                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
         }
 
         //Attempt to create firebase user
@@ -100,19 +102,19 @@ public class Signup extends AppCompatActivity {
                             } catch(FirebaseAuthWeakPasswordException e) {
                                 //Toast for weak password
                                 setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Weak Password",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Weak Password",Toast.LENGTH_LONG).show(); //long
                             } catch(FirebaseAuthInvalidCredentialsException e) {
                                 //Toast for invalid email
                                 setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_LONG).show();
                             } catch(FirebaseAuthUserCollisionException e) {
                                 //Toast for existing user with that email
                                 setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Error: Existing user with email",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Error: Existing user with email",Toast.LENGTH_LONG).show();
                             } catch(Exception e) {
                                 //Toast for general user auth error
                                 setContentView(R.layout.activity_signup);
-                                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                             }
                         }
                     }
