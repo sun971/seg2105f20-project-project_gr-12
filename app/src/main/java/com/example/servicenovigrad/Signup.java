@@ -59,22 +59,19 @@ public class Signup extends AppCompatActivity {
         RadioGroup accountTypeRadioGroup = (RadioGroup)findViewById(R.id.accountTypeRadioGroup);
         int checkedId = accountTypeRadioGroup.getCheckedRadioButtonId();
 
-
-
-
-        if (firstNameField == null || lastNameField == null || usernameField == null || emailField == null || passwordField == null) {
-            //They didnt enter a field.... sned toast notif
-            setContentView(R.layout.activity_signup);
-            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
-            validCredentials = false;
-        }
-
         String firstName = firstNameField.getText().toString();
         String lastName = lastNameField.getText().toString();
         String username = usernameField.getText().toString();
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
         String accountType = "";
+
+        if (firstNameField.equals("") || lastNameField.equals("") || usernameField.equals("") || emailField.equals("") || passwordField.equals("")) {
+            //They didnt enter a field.... sned toast notif
+            setContentView(R.layout.activity_signup);
+            Toast.makeText(getApplicationContext(),"All fields require a value",Toast.LENGTH_LONG).show();
+            validCredentials = false;
+        }
 
         switch (checkedId) {
             case R.id.employeeAccountSelect:
@@ -88,6 +85,18 @@ public class Signup extends AppCompatActivity {
                 validCredentials = false;
                 setContentView(R.layout.activity_signup);
                 Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+        }
+
+        /*
+        UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
+        // See the UserRecord reference doc for the contents of userRecord.
+        System.out.println("Successfully fetched user data: " + userRecord.getEmail());
+
+         */
+        
+
+        if email already in authenticator {
+            valid cred = false
         }
 
         //Attempt to create firebase user
@@ -120,17 +129,17 @@ public class Signup extends AppCompatActivity {
                     }
                 });
 
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user == null) {
-            //Was unable to authenticate
-            validCredentials = false;
+        if email not in authenticator {
+            validCredentials = false
         }
+
+
 
         //If account successfully created
         if (validCredentials) {
             //SEND CREDENTIALS TO REALTIME DATABASE
             //return user to login page
+            FirebaseUser user = mAuth.getCurrentUser();
             String userId = user.getUid();
             DatabaseReference newUserFirstNameRef = mDatabase.getReference("users/" + userId + "/firstName");
             DatabaseReference newUserLastNameRef = mDatabase.getReference("users/" + userId + "/lastName");
