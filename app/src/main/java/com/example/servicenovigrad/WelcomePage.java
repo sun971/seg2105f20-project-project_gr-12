@@ -45,12 +45,15 @@ public class WelcomePage extends AppCompatActivity {
 
 
         }
-        //session.signOut();
+
     }
 
 
 
     public void goToLoginPage(View view) {
+
+        session.signOut();
+
         Intent intent = new Intent(this, Login.class);
 
         startActivity(intent);
@@ -71,7 +74,7 @@ public class WelcomePage extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             TextView helloTextView = (TextView) findViewById(R.id.welcomeMessage);
-                            helloTextView.setText("Welcome "+snapshot.child("firstName").getValue()+", you are logged in as "+snapshot.child("accountType").getValue());
+                            helloTextView.setText("Welcome "+snapshot.child("firstName").getValue()+"! You are logged in as \""+snapshot.child("accountType").getValue()+"\".");
 
                         }
 
