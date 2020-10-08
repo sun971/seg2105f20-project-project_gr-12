@@ -1,7 +1,7 @@
 package com.example.servicenovigrad;
 
 public class AdminAccount extends Account {
-    AdminAccount(String firstName, String lastName, String eMail, String password) {
+    AdminAccount() {
         super("admin", "admin", "admin@admin.com", "adminpassword");
     }
     public String getAccountType() {
