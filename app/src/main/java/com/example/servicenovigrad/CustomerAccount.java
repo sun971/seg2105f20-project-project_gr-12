@@ -4,4 +4,7 @@ public class CustomerAccount extends Account {
     CustomerAccount(String firstName, String lastName, String eMail, String password) {
         super(firstName, lastName, eMail, password);
     }
+    public String getAccountType() {
+        return "customer";
+    }
 }
