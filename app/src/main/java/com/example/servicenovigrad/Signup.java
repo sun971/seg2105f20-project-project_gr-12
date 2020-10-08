@@ -58,12 +58,12 @@ public class Signup extends AppCompatActivity {
         RadioGroup accountTypeRadioGroup = (RadioGroup)findViewById(R.id.accountTypeRadioGroup);
         int checkedId = accountTypeRadioGroup.getCheckedRadioButtonId();
 
-        String firstName = firstNameField.getText().toString();
-        String lastName = lastNameField.getText().toString();
-        String username = usernameField.getText().toString();
-        String email = emailField.getText().toString();
-        String password = passwordField.getText().toString();
-        String accountType = "";
+        final String firstName = firstNameField.getText().toString();
+        final String lastName = lastNameField.getText().toString();
+        final String username = usernameField.getText().toString();
+        final String email = emailField.getText().toString();
+        final String password = passwordField.getText().toString();
+        final String accountType;
 
         if (firstName.equals("") || lastName.equals("") || username.equals("") || email.equals("") || password.equals("")) {
             //They didnt enter a field.... sned toast notif
@@ -107,34 +107,38 @@ public class Signup extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                                     }
                                 }
+                                else
+                                {
+                                    String user = mAuth.getCurrentUser().getUid();
+
+                                    //If account successfully created
+
+                                        //SEND CREDENTIALS TO REALTIME DATABASE
+                                        //return user to login page
+                                        DatabaseReference newUserFirstNameRef = mDatabase.getReference("users/" + user + "/firstName");
+                                        DatabaseReference newUserLastNameRef = mDatabase.getReference("users/" + user + "/lastName");
+                                        DatabaseReference newUserEmailRef = mDatabase.getReference("users/" + user + "/email");
+                                        DatabaseReference newUserUsernameRef = mDatabase.getReference("users/" + user + "/username");
+                                        DatabaseReference newUserPasswordRef = mDatabase.getReference("users/" + user + "/password");
+                                        DatabaseReference newUserAccountTypeRef = mDatabase.getReference("users/" + user + "/accountType");
+
+                                        newUserFirstNameRef.setValue(firstName);
+                                        newUserLastNameRef.setValue(lastName);
+                                        newUserEmailRef.setValue(email);
+                                        newUserUsernameRef.setValue(username);
+                                        newUserPasswordRef.setValue(password);
+                                        newUserAccountTypeRef.setValue(accountType);
+
+                                        Intent loginIntent = new Intent(Signup.this, Login.class);
+
+                                        startActivity(loginIntent);
+
+
+                                }
                             }
                         });
 
-                //If account successfully created
-                FirebaseUser user = mAuth.getCurrentUser();
 
-                if (user != null) {
-                    //SEND CREDENTIALS TO REALTIME DATABASE
-                    //return user to login page
-                    String userId = user.getUid();
-                    DatabaseReference newUserFirstNameRef = mDatabase.getReference("users/" + userId + "/firstName");
-                    DatabaseReference newUserLastNameRef = mDatabase.getReference("users/" + userId + "/lastName");
-                    DatabaseReference newUserEmailRef = mDatabase.getReference("users/" + userId + "/email");
-                    DatabaseReference newUserUsernameRef = mDatabase.getReference("users/" + userId + "/username");
-                    DatabaseReference newUserPasswordRef = mDatabase.getReference("users/" + userId + "/password");
-                    DatabaseReference newUserAccountTypeRef = mDatabase.getReference("users/" + userId + "/accountType");
-
-                    newUserFirstNameRef.setValue(firstName);
-                    newUserLastNameRef.setValue(lastName);
-                    newUserEmailRef.setValue(email);
-                    newUserUsernameRef.setValue(username);
-                    newUserPasswordRef.setValue(password);
-                    newUserAccountTypeRef.setValue(accountType);
-
-                    Intent loginIntent = new Intent(this, Login.class);
-
-                    startActivity(loginIntent);
-                }
 
 
 
