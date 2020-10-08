@@ -11,6 +11,8 @@ package com.example.servicenovigrad;
         import android.widget.TextView;
 
 //import com.google.firebase.database.FirebaseDatabase;
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.Task;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.DataSnapshot;
@@ -19,9 +21,12 @@ package com.example.servicenovigrad;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
 
+        import java.util.Calendar;
+
 public class WelcomePage extends AppCompatActivity {
     private FirebaseAuth session;
     private FirebaseDatabase mDatabase;
+    private FirebaseAuth AuthUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class WelcomePage extends AppCompatActivity {
 
         session = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+
         getCurrentUser();
     }
 
@@ -48,16 +54,16 @@ public class WelcomePage extends AppCompatActivity {
 
     }
 
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnSignOut) {
+            session.signOut();
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
 
-
-    public void goToLoginPage(View view) {
-
-        session.signOut();
-
-        Intent intent = new Intent(this, Login.class);
-
-        startActivity(intent);
+        }
     }
+
+
 
     public void getCurrentUser(){
         FirebaseUser user = session.getCurrentUser();
@@ -74,8 +80,7 @@ public class WelcomePage extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             TextView helloTextView = (TextView) findViewById(R.id.welcomeMessage);
-                            helloTextView.setText("Welcome "+snapshot.child("firstName").getValue()+"! You are logged in as \""+snapshot.child("accountType").getValue()+"\".");
-
+                            helloTextView.setText("Welcome "+snapshot.child("firstName").getValue()+"! you are logged in as "+snapshot.child("accountType").getValue());
                         }
 
                         @Override
@@ -86,14 +91,9 @@ public class WelcomePage extends AppCompatActivity {
 
             );
 
-            //String role = user.
 
-            //EditText firstNameField = (EditText)findViewById(R.id.signupFirstName);
-
-            // User is signed in
         } else {
-            // No user is signed in
-            //return "Nothing";
+
         }
     }
 
