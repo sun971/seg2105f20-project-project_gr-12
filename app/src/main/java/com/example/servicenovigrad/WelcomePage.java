@@ -26,7 +26,6 @@ package com.example.servicenovigrad;
 public class WelcomePage extends AppCompatActivity {
     private FirebaseAuth session;
     private FirebaseDatabase mDatabase;
-    private FirebaseAuth AuthUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class WelcomePage extends AppCompatActivity {
         if (user != null) {
             String id = user.getUid();
 
-            //String firstName = user.getDisplayName();
             String snap;
             DatabaseReference userData = mDatabase.getReference("users/" + id);
 
