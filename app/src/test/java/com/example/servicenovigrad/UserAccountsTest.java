@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/* 
-    Tests getter methods for employee. customer, and admin accounts
+/*
+    Tests getter methods for employee, customer, and admin accounts
  */
 public class UserAccountsTest {
     @Test
