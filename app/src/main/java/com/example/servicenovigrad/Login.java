@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
             }
             else
             {
-                if (email == "admin" && password == "password") {
+                if (email.equals("admin") && password.equals("admin")) {
                     email = "admin@admin.com";
                     password = "adminpassword";
                 }
