@@ -91,14 +91,9 @@ public class WelcomePage extends AppCompatActivity {
 
             );
 
-            //String role = user.
 
-            //EditText firstNameField = (EditText)findViewById(R.id.signupFirstName);
-
-            // User is signed in
         } else {
-            // No user is signed in
-            //return "Nothing";
+
         }
     }
 
