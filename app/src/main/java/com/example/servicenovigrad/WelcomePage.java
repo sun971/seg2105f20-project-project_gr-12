@@ -68,8 +68,6 @@ public class WelcomePage extends AppCompatActivity {
         FirebaseUser user = session.getCurrentUser();
         if (user != null) {
             String id = user.getUid();
-
-            String snap;
             DatabaseReference userData = mDatabase.getReference("users/" + id);
 
             userData.addListenerForSingleValueEvent(

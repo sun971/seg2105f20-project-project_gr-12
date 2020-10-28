@@ -45,3 +45,42 @@ public abstract class Account {
         this.password = password;
     }
 }
+
+/*
+How to create an account from the db:
+
+FirebaseUser user = session.getCurrentUser();
+    if (user != null) {
+        String id = user.getUid();
+        DatabaseReference userData = mDatabase.getReference("users/" + id);
+        userData.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String accountType = (String) snapshot.child("accountType").getValue();
+                        Account userAccount;
+                        if (accountType.equals("admin")) {
+                            //make admin object
+                            userAccount = new AdminAccount();
+                        } else if (accountType.equals("employee")) {
+                            //make employee object
+                            userAccount = new EmployeeAccount((String) snapshot.child("firstName").getValue(), (String) snapshot.child("lastName").getValue(), (String) snapshot.child("eMail").getValue(), (String) snapshot.child("password").getValue());
+                        } else {
+                            //make customer object
+                            userAccount = new CustomerAccount((String) snapshot.child("firstName").getValue(), (String) snapshot.child("lastName").getValue(), (String) snapshot.child("eMail").getValue(), (String) snapshot.child("password").getValue());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                }
+
+        );
+
+
+    } else {
+
+    }
+ */
