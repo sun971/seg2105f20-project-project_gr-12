@@ -95,8 +95,8 @@ public class AdminWelcome extends AppCompatActivity {
 
 
     public void deleteAccounts(View view) {
-        if (view.getId() == R.id.btnSignOut) {
-            //add in delete accounts view
+        if (view.getId() == R.id.btnDeleteAccounts) {
+            //add in delete accounts view, make the activity
 //            Intent intent = new Intent(this, Login.class);
   //          startActivity(intent);
 
@@ -104,7 +104,7 @@ public class AdminWelcome extends AppCompatActivity {
     }
 
     public void ManageServices(View view) {
-        if (view.getId() == R.id.btnSignOut) {
+        if (view.getId() == R.id.btnManageServices) {
            // session.signOut();
            Intent intent = new Intent(this, CurrentService.class);
             //add in the manage services view
