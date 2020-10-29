@@ -21,6 +21,7 @@
         <activity android:name=".Signup" />
         <activity android:name=".AdminWelcome" />
         <activity android:name=".CurrentService" />
+        <activity android:name=".CreateNewServices"></activity>
 
     </application>
 
