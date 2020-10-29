@@ -39,6 +39,10 @@ public class Login extends AppCompatActivity {
 
         if(currentUser != null)
         {
+            if (currentUser.equals("admin")) {
+                Intent intent = new Intent(this, AdminWelcome.class);
+                startActivity(intent);
+            }
             Intent intent = new Intent(this, WelcomePage.class);
             startActivity(intent);
             //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
@@ -66,10 +70,6 @@ public class Login extends AppCompatActivity {
             }
             else
             {
-                if (email.equals("admin") && password.equals("admin")) {
-                    email = "admin@admin.com";
-                    password = "adminpassword";
-                }
 
                 Log.d("Email", email);
                 Log.d("Password", password);
@@ -77,18 +77,34 @@ public class Login extends AppCompatActivity {
                 session.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        EditText emailField = (EditText)findViewById(R.id.email);
+                        EditText passwordField = (EditText)findViewById(R.id.password);
+
+                        String email = emailField.getText().toString();
+                        String password = passwordField.getText().toString();
+
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Msg", "signInWithEmail:success");
                             FirebaseUser user = session.getCurrentUser();
-                            Log.d("Session",user.toString());
+                            Log.d("Session", user.toString());
 
                             Toast.makeText(Login.this, "Authentication success.", Toast.LENGTH_LONG).show();
 
-                            Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
-                            startActivity(redirectToWelcome);
+                            //Redirect if welcome for admin if user is signed in as an admin
+                            if (email.equals("admin@admin.com") && password.equals("adminpassword")) {
 
-                        } else {
+                                Intent redirectToWelcome = new Intent(Login.this, AdminWelcome.class);
+                                startActivity(redirectToWelcome);
+                            }
+                            else if (!email.equals("admin@admin.com")) {
+                                Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
+                                startActivity(redirectToWelcome);
+                            }
+
+                        }
+                        else {
                             // If sign in fails, display a message to the user.
                             Log.w("Error", "COULD NOT SIGN IN", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_LONG).show();
