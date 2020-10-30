@@ -18,9 +18,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateNewServices extends AppCompatActivity {
+    //doc info
     public boolean firstname;
     public boolean lastname;
     public boolean address;
+    //form info
+    public boolean status;
+    public boolean photoID;
+    public boolean resident;
 
     FirebaseDatabase db;
 
@@ -40,20 +45,23 @@ public class CreateNewServices extends AppCompatActivity {
 
     public void onClickDone(View view) {
 
-
-        //docs require both first name and last name, where as address is optional
-        if (firstname== false || lastname==false && address ==false)  {
+        // make sure the Name of Service  is filled in
+        EditText checkName = (EditText) findViewById(R.id.serviceName);
+        final String emptyField = checkName.getText().toString();
+        if (emptyField.equals("") || emptyField.equals(" ") ){
             setContentView(R.layout.activity_create_new_services);
-            Toast.makeText(getApplicationContext(),"Select both first name and last name",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Name of Service cannot be empty",Toast.LENGTH_LONG).show();
         }
-        else {
-            Toast.makeText(getApplicationContext(),"Processing new Service",Toast.LENGTH_LONG).show();
+
+        //select at least one doc or form option
+        if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true)) {
+            Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
 
             // Add service to database
-            EditText serviceNameEditText = (EditText)findViewById(R.id.signupFirstName);
-            CheckBox firstNameCheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
-            CheckBox lastNameCheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
-            CheckBox CheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
+            EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName); //angus i changed the name to service name
+            CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+            CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+            CheckBox CheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
 
             final String serviceNameField = serviceNameEditText.getText().toString();
 
@@ -63,8 +71,9 @@ public class CreateNewServices extends AppCompatActivity {
             fieldsEnable.put("lastNameFieldEnable", lastname);
             fieldsEnable.put("addressFieldEnable", address);
 
-            Log.e("Service:",serviceNameField);
-            DatabaseReference addService = db.getReference("services/"+serviceNameField);
+
+            Log.e("Service:", serviceNameField);
+            DatabaseReference addService = db.getReference("services/" + serviceNameField);
 
             addService.setValue(new Service(serviceNameField, fieldsEnable));
 
@@ -72,6 +81,23 @@ public class CreateNewServices extends AppCompatActivity {
             Intent intent = new Intent(this, CurrentService.class);
             startActivity(intent);
         }
+        //none selected
+        if((firstname== false && lastname==false && address ==false) && (status== false && photoID==false && resident==false)){
+            setContentView(R.layout.activity_create_new_services);
+        Toast.makeText(getApplicationContext(),"Empty form",Toast.LENGTH_LONG).show();
+         }
+        //nothing in docs selected
+        else if (firstname== false && lastname==false && address ==false)   {
+            setContentView(R.layout.activity_create_new_services);
+            Toast.makeText(getApplicationContext(),"Select at least one in docs",Toast.LENGTH_LONG).show();
+        }
+        //nothing in forms selected
+        else if (status== false && photoID==false && resident ==false)  {
+            setContentView(R.layout.activity_create_new_services);
+            Toast.makeText(getApplicationContext(),"Select at least one in form",Toast.LENGTH_LONG).show();
+        }
+
+
 
 
     }
@@ -113,6 +139,39 @@ public class CreateNewServices extends AppCompatActivity {
         }
         if(!checkBox.isChecked()) {
             address = false;
+        }
+    }
+
+    public void status(View view) {
+        CheckBox checkBox = (CheckBox) (view);
+        if (checkBox.isChecked()) {
+            status=true;
+
+        }
+        if(!checkBox.isChecked()) {
+            status = false;
+        }
+    }
+
+    public void photoID(View view) {
+        CheckBox checkBox = (CheckBox) (view);
+        if (checkBox.isChecked()) {
+            photoID=true;
+
+        }
+        if(!checkBox.isChecked()) {
+            photoID = false;
+        }
+    }
+
+    public void resident(View view) {
+        CheckBox checkBox = (CheckBox) (view);
+        if (checkBox.isChecked()) {
+            resident =true;
+
+        }
+        if(!checkBox.isChecked()) {
+            resident = false;
         }
     }
 }
