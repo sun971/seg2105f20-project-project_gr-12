@@ -59,9 +59,9 @@ public class CreateNewServices extends AppCompatActivity {
 
             HashMap<String, Boolean> fieldsEnable = new HashMap<String, Boolean>();
 
-            fieldsEnable.put("firstNameFieldEnable", true);
-            fieldsEnable.put("lastNameFieldEnable", true);
-            fieldsEnable.put("addressFieldEnable", false);
+            fieldsEnable.put("firstNameFieldEnable", firstname);
+            fieldsEnable.put("lastNameFieldEnable", lastname);
+            fieldsEnable.put("addressFieldEnable", address);
 
             Log.e("Service:",serviceNameField);
             DatabaseReference addService = db.getReference("services/"+serviceNameField);
