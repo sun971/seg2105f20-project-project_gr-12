@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.084" />
 
     <EditText
-        android:id="@+id/signupFirstName"
+        android:id="@+id/serviceName"
         android:layout_width="252dp"
         android:layout_height="42dp"
         android:ems="10"
@@ -103,6 +103,7 @@
         android:layout_width="345dp"
         android:layout_height="38dp"
         android:text="Proof of resident"
+        android:onClick="resident"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
@@ -115,6 +116,7 @@
         android:layout_width="349dp"
         android:layout_height="35dp"
         android:text="Photo id"
+        android:onClick="photoID"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,10 +124,11 @@
         app:layout_constraintVertical_bias="0.736" />
 
     <CheckBox
-        android:id="@+id/rbtnStatus"
+        android:id="@+id/cbtnStatus"
         android:layout_width="349dp"
         android:layout_height="40dp"
         android:text="Proof of Status"
+        android:onClick="status"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
