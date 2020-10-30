@@ -4,20 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CreateNewServices extends AppCompatActivity {
     public boolean firstname;
     public boolean lastname;
     public boolean address;
 
+    FirebaseDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_services);
+
+        db = FirebaseDatabase.getInstance();
     }
 
 
@@ -35,8 +47,28 @@ public class CreateNewServices extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Select both first name and last name",Toast.LENGTH_LONG).show();
         }
         else {
-            setContentView(R.layout.activity_create_new_services);
             Toast.makeText(getApplicationContext(),"Processing new Service",Toast.LENGTH_LONG).show();
+
+            // Add service to database
+            EditText serviceNameEditText = (EditText)findViewById(R.id.signupFirstName);
+            CheckBox firstNameCheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
+            CheckBox lastNameCheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
+            CheckBox CheckBox = (CheckBox)findViewById(R.id.cbtnFirstName);
+
+            final String serviceNameField = serviceNameEditText.getText().toString();
+
+            HashMap<String, Boolean> fieldsEnable = new HashMap<String, Boolean>();
+
+            fieldsEnable.put("firstNameFieldEnable", true);
+            fieldsEnable.put("lastNameFieldEnable", true);
+            fieldsEnable.put("addressFieldEnable", false);
+
+            Log.e("Service:",serviceNameField);
+            DatabaseReference addService = db.getReference("services/"+serviceNameField);
+
+            addService.setValue(new Service(serviceNameField, fieldsEnable));
+
+
             Intent intent = new Intent(this, CurrentService.class);
             startActivity(intent);
         }
