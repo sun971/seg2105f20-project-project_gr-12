@@ -1,5 +1,6 @@
 package com.example.servicenovigrad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,8 +12,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +60,7 @@ public class CreateNewServices extends AppCompatActivity {
         else    {
             //select at least one doc or form option
             if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true)) {
-                Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
+
 
                 // Add service to database
                 EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName); //angus i changed the name to service name
@@ -69,23 +74,49 @@ public class CreateNewServices extends AppCompatActivity {
 
                 final String serviceNameField = serviceNameEditText.getText().toString();
 
-                HashMap<String, Boolean> fieldsEnable = new HashMap<String, Boolean>();
+                HashMap<String, Boolean> fieldsEnableTemp = new HashMap<String, Boolean>();
 
-                HashMap<String, Boolean> formsEnable = new HashMap<String, Boolean>();
+                HashMap<String, Boolean> formsEnableTemp = new HashMap<String, Boolean>();
 
-                fieldsEnable.put("firstNameFieldEnable", firstname);
-                fieldsEnable.put("lastNameFieldEnable", lastname);
-                fieldsEnable.put("addressFieldEnable", address);
+                fieldsEnableTemp.put("firstNameFieldEnable", firstname);
+                fieldsEnableTemp.put("lastNameFieldEnable", lastname);
+                fieldsEnableTemp.put("addressFieldEnable", address);
 
-                formsEnable.put("statusFormEnable", status);
-                formsEnable.put("photoIDFormEnable", photoID);
-                formsEnable.put("residentFormEnable", resident);
+                formsEnableTemp.put("statusFormEnable", status);
+                formsEnableTemp.put("photoIDFormEnable", photoID);
+                formsEnableTemp.put("residentFormEnable", resident);
 
+                final HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
+                final HashMap<String, Boolean> formsEnable = formsEnableTemp;
 
                 Log.e("Service:", serviceNameField);
-                DatabaseReference addService = db.getReference("services/" + serviceNameField);
 
-                addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable));
+
+                DatabaseReference serviceExists = db.getReference("services/" + serviceNameField);
+                serviceExists.addValueEventListener(new ValueEventListener()
+                {
+                    public void onDataChange(DataSnapshot data)
+                    {
+                        Log.e("DATA FOR SERVICE REQUEST:", String.valueOf(data.exists()));
+                        if(data.exists())
+                        {
+                            Toast.makeText(getApplicationContext(),"Service already exists",Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
+                            DatabaseReference addService = db.getReference("services/" + serviceNameField);
+                            addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
 
                 Intent intent = new Intent(this, CurrentService.class);
