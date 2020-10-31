@@ -3,12 +3,17 @@ package com.example.servicenovigrad;
 import androidx.annotation.NonNull;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CurrentService extends AppCompatActivity {
 
@@ -39,6 +45,14 @@ public class CurrentService extends AppCompatActivity {
 
         services = new ArrayList<String>();
 
+        listViewServices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String service = services.get(i);
+                showEditDeleteDialog(service);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -51,8 +65,7 @@ public class CurrentService extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String service = postSnapshot.child("name").getValue().toString();
-                    String tmp = service.substring(0, 1).toUpperCase() + service.substring(1);
-                    services.add(tmp);
+                    services.add(service);
                 }
                 Collections.sort(services);
 
@@ -65,6 +78,36 @@ public class CurrentService extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showEditDeleteDialog(final String serviceName) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_edit_delete, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonEdit);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDelete);
+
+        dialogBuilder.setTitle(serviceName);
+        final AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteService(serviceName);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void deleteService(String name) {
+        Log.d("TEST",name);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
+        dR.removeValue();
+        Toast.makeText(getApplicationContext(), "Product Deleted", Toast.LENGTH_LONG).show();
     }
 
     public void CreateNewServices(View view) {
