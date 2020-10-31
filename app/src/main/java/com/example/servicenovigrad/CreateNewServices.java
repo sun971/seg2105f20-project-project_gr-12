@@ -132,6 +132,12 @@ public class CreateNewServices extends AppCompatActivity {
                 setContentView(R.layout.activity_create_new_services);
                 Toast.makeText(getApplicationContext(),"Select at least one in docs",Toast.LENGTH_LONG).show();
             }
+            //Make sure not only address field is checked
+            else if(firstname == false && lastname == false && address == true)  {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Please select at least one of the name fields",Toast.LENGTH_LONG).show();
+            }
+
             //nothing in forms selected
             else if (status== false && photoID==false && resident ==false)  {
                 setContentView(R.layout.activity_create_new_services);
