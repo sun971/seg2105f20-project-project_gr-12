@@ -67,4 +67,8 @@ public class Service {
 /*    public boolean removeInfo(String info) {
         return requiredInfo.remove(info);
     }*/
+    @Override
+    public String toString() {
+        return name;
+    }
 }
