@@ -7,14 +7,14 @@ import java.util.List;
 public class Service {
     private String name;
     private HashMap<String, Boolean> requiredInfo;
-    private List<String> requiredDocs;
+    private HashMap<String, Boolean> requiredDocs;
     private float price;
 
     //Creates a service with no required docs or info (to be added through the add methods)
-    Service(String name, HashMap<String, Boolean> infoFormFields) {
+    Service(String name, HashMap<String, Boolean> infoFormFields, HashMap<String, Boolean> docsFormFields) {
         this.name = name;
         this.requiredInfo = infoFormFields;
-        //this.requiredDocs = new ArrayList<String>();
+        this.requiredDocs = docsFormFields;
         //this.price = price;
     }
 
@@ -34,9 +34,9 @@ public class Service {
         return price;
     }*/
 
-    /*public List<String> getRequiredDocs() {
+    public HashMap<String, Boolean> getRequiredDocs() {
         return requiredDocs;
-    }*/
+    }
 
     //Adds a new required doc to the list of required docs if the list does not already contain it and returns the new list
     /*public List<String> addRequiredDoc(String doc) {

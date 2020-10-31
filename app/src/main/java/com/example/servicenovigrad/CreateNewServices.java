@@ -52,50 +52,62 @@ public class CreateNewServices extends AppCompatActivity {
             setContentView(R.layout.activity_create_new_services);
             Toast.makeText(getApplicationContext(),"Name of Service cannot be empty",Toast.LENGTH_LONG).show();
         }
+        else    {
+            //select at least one doc or form option
+            if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true)) {
+                Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
 
-        //select at least one doc or form option
-        if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true)) {
-            Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
+                // Add service to database
+                EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName); //angus i changed the name to service name
+                CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+                CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+                CheckBox CheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
 
-            // Add service to database
-            EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName); //angus i changed the name to service name
-            CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
-            CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
-            CheckBox CheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+                CheckBox statusCheckbox = (CheckBox) findViewById(R.id.cbtnStatus);
+                CheckBox photoIDCheckBox = (CheckBox) findViewById(R.id.cbtnPhoto);
+                CheckBox residentCheckBox = (CheckBox) findViewById(R.id.cbtnRes);
 
-            final String serviceNameField = serviceNameEditText.getText().toString();
+                final String serviceNameField = serviceNameEditText.getText().toString();
 
-            HashMap<String, Boolean> fieldsEnable = new HashMap<String, Boolean>();
+                HashMap<String, Boolean> fieldsEnable = new HashMap<String, Boolean>();
 
-            fieldsEnable.put("firstNameFieldEnable", firstname);
-            fieldsEnable.put("lastNameFieldEnable", lastname);
-            fieldsEnable.put("addressFieldEnable", address);
+                HashMap<String, Boolean> formsEnable = new HashMap<String, Boolean>();
 
+                fieldsEnable.put("firstNameFieldEnable", firstname);
+                fieldsEnable.put("lastNameFieldEnable", lastname);
+                fieldsEnable.put("addressFieldEnable", address);
 
-            Log.e("Service:", serviceNameField);
-            DatabaseReference addService = db.getReference("services/" + serviceNameField);
-
-            addService.setValue(new Service(serviceNameField, fieldsEnable));
+                formsEnable.put("statusFormEnable", status);
+                formsEnable.put("photoIDFormEnable", photoID);
+                formsEnable.put("residentFormEnable", resident);
 
 
-            Intent intent = new Intent(this, CurrentService.class);
-            startActivity(intent);
+                Log.e("Service:", serviceNameField);
+                DatabaseReference addService = db.getReference("services/" + serviceNameField);
+
+                addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable));
+
+
+                Intent intent = new Intent(this, CurrentService.class);
+                startActivity(intent);
+            }
+            //none selected
+            if((firstname== false && lastname==false && address ==false) && (status== false && photoID==false && resident==false)){
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Empty form",Toast.LENGTH_LONG).show();
+            }
+            //nothing in docs selected
+            else if (firstname== false && lastname==false && address ==false)   {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Select at least one in docs",Toast.LENGTH_LONG).show();
+            }
+            //nothing in forms selected
+            else if (status== false && photoID==false && resident ==false)  {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Select at least one in form",Toast.LENGTH_LONG).show();
+            }
         }
-        //none selected
-        if((firstname== false && lastname==false && address ==false) && (status== false && photoID==false && resident==false)){
-            setContentView(R.layout.activity_create_new_services);
-        Toast.makeText(getApplicationContext(),"Empty form",Toast.LENGTH_LONG).show();
-         }
-        //nothing in docs selected
-        else if (firstname== false && lastname==false && address ==false)   {
-            setContentView(R.layout.activity_create_new_services);
-            Toast.makeText(getApplicationContext(),"Select at least one in docs",Toast.LENGTH_LONG).show();
-        }
-        //nothing in forms selected
-        else if (status== false && photoID==false && resident ==false)  {
-            setContentView(R.layout.activity_create_new_services);
-            Toast.makeText(getApplicationContext(),"Select at least one in form",Toast.LENGTH_LONG).show();
-        }
+
 
 
 
