@@ -104,4 +104,12 @@ public class DeleteAccount extends AppCompatActivity {
 
         //}
     }
+
+    public void onClick(View v) {
+        if (v.getId() == R.id.backButton) {
+            Intent intent = new Intent(this, AdminWelcome.class);
+            startActivity(intent);
+
+        }
+    }
 }

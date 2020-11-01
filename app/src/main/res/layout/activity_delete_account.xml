@@ -20,31 +20,65 @@
             android:id="@+id/deleteMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/deleteMessage" />
+            android:layout_gravity="center"
+            android:text="@string/deleteMessage"
+            android:textSize="30sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0" />
 
         <TextView
             android:id="@+id/enterEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/enterInEmail"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="0" />
 
         <EditText
             android:id="@+id/deletedEmail"
             android:layout_width="243dp"
             android:layout_height="45dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:hint="email"
             android:inputType="textEmailAddress" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0" />
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:background="@drawable/round_button"
             android:onClick="clickDelete"
             android:text="Delete"
+            android:textColor="#F1EFF4" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0" />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:onClick="onClick"
+            android:text="Back"
             android:textColor="#F1EFF4" />
     </LinearLayout>
 
