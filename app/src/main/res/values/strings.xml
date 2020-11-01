@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Service Novigrad</string>
     <string name="welcomeMessage">Welcome User</string>
+    <string name="deleteMessage">Delete Accounts</string>
+    <string name="enterEmail">Enter the email of the user you wish to delete:</string>
+    <string name="enterInEmail">Enter in the email of the account to delete</string>
 </resources>

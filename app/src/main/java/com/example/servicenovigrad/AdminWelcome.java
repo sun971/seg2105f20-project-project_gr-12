@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+
 public class AdminWelcome extends AppCompatActivity {
     private FirebaseAuth session;
     private FirebaseDatabase mDatabase;
@@ -95,10 +96,9 @@ public class AdminWelcome extends AppCompatActivity {
 
 
     public void deleteAccounts(View view) {
-        if (view.getId() == R.id.btnSignOut) {
-            //add in delete accounts view
-//            Intent intent = new Intent(this, Login.class);
-  //          startActivity(intent);
+        if (view.getId() == R.id.DeleteAccounts) {
+            Intent intent = new Intent(this, DeleteAccount.class);
+            startActivity(intent);
 
         }
     }
