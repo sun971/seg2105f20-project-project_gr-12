@@ -74,6 +74,11 @@ public class Login extends AppCompatActivity {
                 Log.d("Email", email);
                 Log.d("Password", password);
 
+                if(email.equals("admin") && password.equals("admin")){
+                    email = "admin@admin.com";
+                    password = "adminpassword";
+                }
+
                 session.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,6 +88,11 @@ public class Login extends AppCompatActivity {
 
                         String email = emailField.getText().toString();
                         String password = passwordField.getText().toString();
+
+                        if(email.equals("admin") && password.equals("admin")){
+                            email = "admin@admin.com";
+                            password = "adminpassword";
+                        }
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
@@ -94,11 +104,12 @@ public class Login extends AppCompatActivity {
 
                             //Redirect if welcome for admin if user is signed in as an admin
                             if (email.equals("admin@admin.com") && password.equals("adminpassword")) {
-
+                                Log.d("Email", "TESTING");
                                 Intent redirectToWelcome = new Intent(Login.this, AdminWelcome.class);
                                 startActivity(redirectToWelcome);
                             }
                             else if (!email.equals("admin@admin.com")) {
+                                Log.d("Email", email);
                                 Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
                                 startActivity(redirectToWelcome);
                             }
