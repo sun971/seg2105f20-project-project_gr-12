@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,10 +26,14 @@ public class DeleteAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_account);
-        dbRef = FirebaseDatabase.getInstance().getReference("users");
+
 
     }
 
+    public void onStart()   {
+        super.onStart();
+        dbRef = FirebaseDatabase.getInstance().getReference("users");
+    }
 
     private boolean deleteUser(String id) {
 
@@ -82,11 +87,9 @@ public class DeleteAccount extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             if (snapshot.getValue() != null) {
-                                if (deleteUser((String) snapshot.getValue())) {
-                                    Toast.makeText(getApplicationContext(), "Deleted User", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Unsuccessful", Toast.LENGTH_LONG).show();
-                                }
+
+                                String user = String.valueOf(snapshot.getValue());
+                                Log.e("DATA", user);
                             }else{
                                 Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
                             }
