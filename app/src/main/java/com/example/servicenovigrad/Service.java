@@ -8,14 +8,14 @@ public class Service {
     private String name;
     private HashMap<String, Boolean> requiredInfo;
     private HashMap<String, Boolean> requiredDocs;
-    private float price;
+    private double price;
 
     //Creates a service with no required docs or info (to be added through the add methods)
-    Service(String name, HashMap<String, Boolean> infoFormFields, HashMap<String, Boolean> docsFormFields) {
+    Service(String name, HashMap<String, Boolean> infoFormFields, HashMap<String, Boolean> docsFormFields, double price) {
         this.name = name;
         this.requiredInfo = infoFormFields;
         this.requiredDocs = docsFormFields;
-        //this.price = price;
+        this.price = price;
     }
 
     public void setName(String name) {
@@ -30,9 +30,9 @@ public class Service {
         this.price = price;
     }*/
 
-    /*public float getPrice() {
+    public double getPrice() {
         return price;
-    }*/
+    }
 
     public HashMap<String, Boolean> getRequiredDocs() {
         return requiredDocs;

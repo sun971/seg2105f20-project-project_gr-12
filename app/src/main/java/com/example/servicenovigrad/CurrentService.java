@@ -101,18 +101,24 @@ public class CurrentService extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteService(serviceName);
+                Intent intent = new Intent(CurrentService.this, CreateNewServices.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void deleteService(String name) {
-        Log.d("TEST",name);
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Product Deleted", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_SHORT).show();
     }
 
     public void CreateNewServices(View view) {
         Intent intent = new Intent(this, CreateNewServices.class);
-        //add in the manage services view
         startActivity(intent);
     }
 }

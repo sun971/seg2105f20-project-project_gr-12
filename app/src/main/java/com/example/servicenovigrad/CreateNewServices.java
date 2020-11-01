@@ -27,10 +27,17 @@ public class CreateNewServices extends AppCompatActivity {
     public boolean firstname;
     public boolean lastname;
     public boolean address;
+    public boolean dob;
     //form info
     public boolean status;
     public boolean photoID;
     public boolean resident;
+    public boolean license;
+
+    //to fix error where unwanted toast pops up
+    public boolean serviceExistsCheck;
+    //keeps track if entered price is in valid format
+    public boolean priceValid;
 
     FirebaseDatabase db;
 
@@ -43,36 +50,73 @@ public class CreateNewServices extends AppCompatActivity {
     }
 
 
-    public void back(View view) {
+    /*public void back(View view) {
         Intent intent = new Intent(this, CurrentService.class);
         startActivity(intent);
-    }
+    }*/
 
     public void onClickDone(View view) {
+        serviceExistsCheck = true;
+        priceValid = true;
 
-        // make sure the Name of Service  is filled in
+        CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
+        CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.rbtnlastName);
+        CheckBox addressCheckBox = (CheckBox) findViewById(R.id.rbtnaddress);
+        CheckBox dobCheckBox = (CheckBox) findViewById(R.id.rbtnDob);
+
+        CheckBox statusCheckbox = (CheckBox) findViewById(R.id.cbtnStatus);
+        CheckBox photoIDCheckBox = (CheckBox) findViewById(R.id.cbtnPhoto);
+        CheckBox residentCheckBox = (CheckBox) findViewById(R.id.cbtnRes);
+        CheckBox licenseCheckBox = (CheckBox) findViewById(R.id.cbtnLicense);
+
+        firstname = firstNameCheckBox.isChecked();
+        lastname = lastNameCheckBox.isChecked();
+        address = addressCheckBox.isChecked();
+        dob = dobCheckBox.isChecked();
+        status = statusCheckbox.isChecked();
+        photoID = photoIDCheckBox.isChecked();
+        resident = residentCheckBox.isChecked();
+        license = licenseCheckBox.isChecked();
+
+
+        // make sure the Name of Service and price is filled in
         EditText checkName = (EditText) findViewById(R.id.serviceName);
-        final String emptyField = checkName.getText().toString();
-        if (emptyField.equals("") || emptyField.equals(" ") ){
+        EditText checkPrice = (EditText) findViewById(R.id.servicePrice);
+
+        String emptyNameField = checkName.getText().toString();
+        String priceField = checkPrice.getText().toString();
+
+        emptyNameField = emptyNameField.replaceAll("\\s+","");
+
+        if(!priceField.matches("^\\d+(.\\d{1,2})?$")){
+            priceValid = false;
+        }
+
+        if (emptyNameField.equals("")){
             setContentView(R.layout.activity_create_new_services);
-            Toast.makeText(getApplicationContext(),"Name of Service cannot be empty",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Please Enter the Name of Service",Toast.LENGTH_LONG).show();
+        }
+        else if(priceField.equals("")) {
+            setContentView(R.layout.activity_create_new_services);
+            Toast.makeText(getApplicationContext(),"Please Enter a Price",Toast.LENGTH_LONG).show();
         }
         else    {
             //select at least one doc or form option
-            if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true)) {
+            if ((firstname== true || lastname==true) && (status== true || photoID==true || resident ==true) && (priceValid)) {
 
 
                 // Add service to database
-                EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName); //angus i changed the name to service name
-                CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
-                CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
-                CheckBox CheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
-
-                CheckBox statusCheckbox = (CheckBox) findViewById(R.id.cbtnStatus);
-                CheckBox photoIDCheckBox = (CheckBox) findViewById(R.id.cbtnPhoto);
-                CheckBox residentCheckBox = (CheckBox) findViewById(R.id.cbtnRes);
+                EditText serviceNameEditText = (EditText) findViewById(R.id.serviceName);
+                EditText servicePriceEditText = (EditText) findViewById(R.id.servicePrice);
 
                 final String serviceNameField = serviceNameEditText.getText().toString();
+                String servicePriceString = servicePriceEditText.getText().toString();
+
+                if(servicePriceString.equals(".")){
+                    servicePriceString = "0.00";
+                }
+
+                final double servicePriceField = Double.parseDouble(servicePriceString);
 
                 HashMap<String, Boolean> fieldsEnableTemp = new HashMap<String, Boolean>();
 
@@ -81,15 +125,18 @@ public class CreateNewServices extends AppCompatActivity {
                 fieldsEnableTemp.put("firstNameFieldEnable", firstname);
                 fieldsEnableTemp.put("lastNameFieldEnable", lastname);
                 fieldsEnableTemp.put("addressFieldEnable", address);
+                fieldsEnableTemp.put("dobFieldEnable", dob);
 
                 formsEnableTemp.put("statusFormEnable", status);
                 formsEnableTemp.put("photoIDFormEnable", photoID);
                 formsEnableTemp.put("residentFormEnable", resident);
+                formsEnableTemp.put("licenseFormEnable", license);
 
                 final HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
                 final HashMap<String, Boolean> formsEnable = formsEnableTemp;
 
                 Log.e("Service:", serviceNameField);
+                Log.e("Service:", servicePriceEditText.getText().toString());
 
 
                 DatabaseReference serviceExists = db.getReference("services/" + serviceNameField);
@@ -98,15 +145,17 @@ public class CreateNewServices extends AppCompatActivity {
                     public void onDataChange(DataSnapshot data)
                     {
                         Log.e("DATA FOR SERVICE REQUEST:", String.valueOf(data.exists()));
-                        if(data.exists())
-                        {
-                            Toast.makeText(getApplicationContext(),"Service already exists",Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "Processing new Service", Toast.LENGTH_LONG).show();
-                            DatabaseReference addService = db.getReference("services/" + serviceNameField);
-                            addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable));
+                        if (serviceExistsCheck){
+                            if(data.exists())
+                            {
+                                Toast.makeText(getApplicationContext(),"Service already exists",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Processing New Service", Toast.LENGTH_SHORT).show();
+                                DatabaseReference addService = db.getReference("services/" + serviceNameField);
+                                addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable, servicePriceField));
+                                serviceExistsCheck = false;
+                            }
                         }
                     }
 
@@ -116,38 +165,38 @@ public class CreateNewServices extends AppCompatActivity {
                     }
                 });
 
-
-
-
                 Intent intent = new Intent(this, CurrentService.class);
                 startActivity(intent);
             }
-            //none selected
-            if((firstname== false && lastname==false && address ==false) && (status== false && photoID==false && resident==false)){
-                setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Empty form",Toast.LENGTH_LONG).show();
-            }
-            //nothing in docs selected
-            else if (firstname== false && lastname==false && address ==false)   {
-                setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Select at least one in docs",Toast.LENGTH_LONG).show();
-            }
-            //Make sure not only address field is checked
-            else if(firstname == false && lastname == false && address == true)  {
-                setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Please select at least one of the name fields",Toast.LENGTH_LONG).show();
-            }
 
-            //nothing in forms selected
-            else if (status== false && photoID==false && resident ==false)  {
+            //none selected
+            if((firstname==false && lastname==false && address==false && dob==false && license==false) && (status==false && photoID==false && resident==false)){
                 setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Select at least one in form",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Document and Form Info Not Specified",Toast.LENGTH_LONG).show();
+            }
+            //nothing in forms selected
+            else if (firstname==false && lastname==false && address==false && dob==false && license==false)   {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Select at least one Document Info",Toast.LENGTH_LONG).show();
+
+            }
+            //nothing in documents selected
+            else if (status==false && photoID==false && resident==false)  {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Select at least one Form Info",Toast.LENGTH_LONG).show();
+
+            }
+            //Make sure not only address or dob field is checked
+            else if(firstname == false && lastname == false && (address == true || dob == true || license==true))  {
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Select at least one name field",Toast.LENGTH_LONG).show();
+
+            }
+            else if(!priceValid){
+                setContentView(R.layout.activity_create_new_services);
+                Toast.makeText(getApplicationContext(),"Maximum Two Decimals for Price",Toast.LENGTH_LONG).show();
             }
         }
-
-
-
-
 
     }
 
@@ -156,71 +205,4 @@ public class CreateNewServices extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void firstName(View view) {
-
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            firstname=true;
-
-        }
-        if(!checkBox.isChecked()) {
-            firstname = false;
-        }
-    }
-
-    public void lastName(View view) {
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            lastname=true;
-
-        }
-        if(!checkBox.isChecked()) {
-            lastname = false;
-        }
-    }
-
-    public void address(View view) {
-
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            address=true;
-
-        }
-        if(!checkBox.isChecked()) {
-            address = false;
-        }
-    }
-
-    public void status(View view) {
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            status=true;
-
-        }
-        if(!checkBox.isChecked()) {
-            status = false;
-        }
-    }
-
-    public void photoID(View view) {
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            photoID=true;
-
-        }
-        if(!checkBox.isChecked()) {
-            photoID = false;
-        }
-    }
-
-    public void resident(View view) {
-        CheckBox checkBox = (CheckBox) (view);
-        if (checkBox.isChecked()) {
-            resident =true;
-
-        }
-        if(!checkBox.isChecked()) {
-            resident = false;
-        }
-    }
 }
