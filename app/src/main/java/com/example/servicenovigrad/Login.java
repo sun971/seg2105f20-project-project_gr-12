@@ -104,12 +104,10 @@ public class Login extends AppCompatActivity {
 
                             //Redirect if welcome for admin if user is signed in as an admin
                             if (email.equals("admin@admin.com") && password.equals("adminpassword")) {
-                                Log.d("Email", "TESTING");
                                 Intent redirectToWelcome = new Intent(Login.this, AdminWelcome.class);
                                 startActivity(redirectToWelcome);
                             }
                             else if (!email.equals("admin@admin.com")) {
-                                Log.d("Email", email);
                                 Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
                                 startActivity(redirectToWelcome);
                             }
