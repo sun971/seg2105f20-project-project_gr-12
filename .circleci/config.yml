@@ -22,32 +22,24 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
-          key: jars-{{ checksum "build.gradle"}}-{{ checksum "app/build.gradle"}}
-
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Chmod permissions
-          command: sudo chmod +x ./gradlew
+         name: Chmod permissions  
+         command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-  
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle"}}-{{ checksum "app/build.gradle"}}
-
-      # run tests!
-      - run: 
-          name: Unit tests
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run UnitTest
           command: ./gradlew test
-      
       - store_artifacts:
           path: app/build/outputs/apk/debug/
           destination: apks/
       - store_test_results:
-          path: app/build/junit-test-results
-
-
+          path: app/build/test-results
+ 
