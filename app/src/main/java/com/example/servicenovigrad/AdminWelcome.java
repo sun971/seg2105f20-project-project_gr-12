@@ -96,7 +96,7 @@ public class AdminWelcome extends AppCompatActivity {
 
 
     public void deleteAccounts(View view) {
-        if (view.getId() == R.id.DeleteAccounts) {
+        if (view.getId() == R.id.btnDeleteAccounts) {
             Intent intent = new Intent(this, DeleteAccount.class);
             startActivity(intent);
 
