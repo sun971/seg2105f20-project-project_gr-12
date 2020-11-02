@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Set;
+
 public class DeleteAccount extends AppCompatActivity {
     private DatabaseReference dbRef;
     @Override
@@ -78,7 +81,7 @@ public class DeleteAccount extends AppCompatActivity {
 
     public void clickDelete(View v) {
         //if (v.getId() == R.id.deleteButton) {
-            EditText emailField = (EditText)findViewById(R.id.deletedEmail);
+            final EditText emailField = (EditText)findViewById(R.id.deletedEmail);
             String email = emailField.getText().toString();
 
             dbRef.orderByChild("eMail").equalTo(email).addListenerForSingleValueEvent(
@@ -87,9 +90,14 @@ public class DeleteAccount extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             if (snapshot.getValue() != null) {
+                                HashMap<String, String> userInfo = (HashMap<String, String>) snapshot.getValue();
+                                String[] userID = userInfo.keySet().toArray(new String[1]);
+                                String user = userID[0];
 
-                                String user = String.valueOf(snapshot.getValue());
-                                Log.e("DATA", user);
+                                if(deleteUser(user))  {
+                                    Toast.makeText(getApplicationContext(), "User deleted", Toast.LENGTH_LONG).show();
+                                    emailField.setText("");
+                                }
                             }else{
                                 Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
                             }
