@@ -114,14 +114,15 @@ public class Signup extends AppCompatActivity {
                                 }
                                 else
                                 {
-                                    String user = mAuth.getCurrentUser().getUid();
+                                    //String user = mAuth.getCurrentUser().getEmail();
+                                    String id = mAuth.getCurrentUser().getUid();
 
                                     //If account successfully created
-                                    DatabaseReference userReference = mDatabase.getReference("users/" + user);
+                                    DatabaseReference userReference = mDatabase.getReference("users/"+id);
                                     if (accountType.equals("employee")) {
-                                        userReference.setValue(new EmployeeAccount(firstName, lastName, email, password));
+                                        userReference.setValue(new EmployeeAccount(id, firstName, lastName, email, password));
                                     } else {
-                                        userReference.setValue(new CustomerAccount(firstName, lastName, email, password));
+                                        userReference.setValue(new CustomerAccount(id, firstName, lastName, email, password));
                                     }
 
                                     /*

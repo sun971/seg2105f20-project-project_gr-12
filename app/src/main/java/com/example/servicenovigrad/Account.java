@@ -1,15 +1,21 @@
 package com.example.servicenovigrad;
 
 public abstract class Account {
+    private String uid;
     private String eMail;
     private String firstName;
     private String lastName;
     private String password;
-    Account(String firstName, String lastName, String eMail, String password) {
+    Account(String uid, String firstName, String lastName, String eMail, String password) {
+        this.uid = uid;
         this.eMail = eMail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public String geteMail() {
@@ -28,6 +34,10 @@ public abstract class Account {
         return password;
     }
     public abstract String getAccountType();
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public void seteMail(String eMail) {
         this.eMail = eMail;
