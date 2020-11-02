@@ -32,19 +32,22 @@ public class CurrentService extends AppCompatActivity {
     ListView listViewServices;
     DatabaseReference databaseServices;
 
-    List<String> services;
+    List<String> services; //stores all the service names
     FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_service);
+
         db = FirebaseDatabase.getInstance();
+
         databaseServices = db.getReference("services");
         listViewServices = (ListView) findViewById(R.id.listViewServices);
 
         services = new ArrayList<String>();
 
+        //Pop up dialog appears when a service is long pressed
         listViewServices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -58,6 +61,8 @@ public class CurrentService extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        //Finds all the current services in the database and displays them in list view
         databaseServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -80,6 +85,7 @@ public class CurrentService extends AppCompatActivity {
         });
     }
 
+    //pop up for deleting and editing service
     private void showEditDeleteDialog(final String serviceName) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -94,6 +100,7 @@ public class CurrentService extends AppCompatActivity {
         final AlertDialog dialog = dialogBuilder.create();
         dialog.show();
 
+        //deletes the specified service when delete button is pressed
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +108,7 @@ public class CurrentService extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        //edit button
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,12 +119,14 @@ public class CurrentService extends AppCompatActivity {
         });
     }
 
+    //deletes the service from database
     private void deleteService(String name) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
         dR.removeValue();
         //Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_SHORT).show();
     }
 
+    //sends user to the create services page
     public void CreateNewServices(View view) {
         Intent intent = new Intent(this, CreateNewServices.class);
         startActivity(intent);

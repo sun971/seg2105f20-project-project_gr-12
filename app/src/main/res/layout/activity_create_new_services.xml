@@ -187,7 +187,7 @@
         android:background="@drawable/round_button"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onClickDone"
-        android:text="Create"
+        android:text="Done"
         android:textColor="#F1EFF4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

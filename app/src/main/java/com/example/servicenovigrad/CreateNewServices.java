@@ -34,8 +34,7 @@ public class CreateNewServices extends AppCompatActivity {
     public boolean resident;
     public boolean license;
 
-    //to fix error where unwanted toast pops up
-    public boolean serviceExistsCheck;
+    public boolean serviceExistsTracker;
     //keeps track if entered price is in valid format
     public boolean priceValid;
 
@@ -45,6 +44,8 @@ public class CreateNewServices extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_services);
+
+        serviceExistsTracker = true;
 
         db = FirebaseDatabase.getInstance();
     }
@@ -56,14 +57,14 @@ public class CreateNewServices extends AppCompatActivity {
     }*/
 
     public void onClickDone(View view) {
-        serviceExistsCheck = true;
+
         priceValid = true;
 
+        //checks what state each check box is in and adds to variables
         CheckBox firstNameCheckBox = (CheckBox) findViewById(R.id.cbtnFirstName);
         CheckBox lastNameCheckBox = (CheckBox) findViewById(R.id.rbtnlastName);
         CheckBox addressCheckBox = (CheckBox) findViewById(R.id.rbtnaddress);
         CheckBox dobCheckBox = (CheckBox) findViewById(R.id.rbtnDob);
-
         CheckBox statusCheckbox = (CheckBox) findViewById(R.id.cbtnStatus);
         CheckBox photoIDCheckBox = (CheckBox) findViewById(R.id.cbtnPhoto);
         CheckBox residentCheckBox = (CheckBox) findViewById(R.id.cbtnRes);
@@ -78,7 +79,6 @@ public class CreateNewServices extends AppCompatActivity {
         resident = residentCheckBox.isChecked();
         license = licenseCheckBox.isChecked();
 
-
         // make sure the Name of Service and price is filled in
         EditText checkName = (EditText) findViewById(R.id.serviceName);
         EditText checkPrice = (EditText) findViewById(R.id.servicePrice);
@@ -86,8 +86,10 @@ public class CreateNewServices extends AppCompatActivity {
         String emptyNameField = checkName.getText().toString();
         String priceField = checkPrice.getText().toString();
 
+        //takes away all spaces. tabs from the Service Name field
         emptyNameField = emptyNameField.replaceAll("\\s+","");
 
+        //checks if the price has no more than 2 decimals
         if(!priceField.matches("^\\d+(.\\d{1,2})?$")){
             priceValid = false;
         }
@@ -112,6 +114,7 @@ public class CreateNewServices extends AppCompatActivity {
                 final String serviceNameField = serviceNameEditText.getText().toString();
                 String servicePriceString = servicePriceEditText.getText().toString();
 
+                //If user entered just a decimal, this will correct it to 0 automatically
                 if(servicePriceString.equals(".")){
                     servicePriceString = "0.00";
                 }
@@ -119,7 +122,6 @@ public class CreateNewServices extends AppCompatActivity {
                 final double servicePriceField = Double.parseDouble(servicePriceString);
 
                 HashMap<String, Boolean> fieldsEnableTemp = new HashMap<String, Boolean>();
-
                 HashMap<String, Boolean> formsEnableTemp = new HashMap<String, Boolean>();
 
                 fieldsEnableTemp.put("firstNameFieldEnable", firstname);
@@ -135,38 +137,36 @@ public class CreateNewServices extends AppCompatActivity {
                 final HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
                 final HashMap<String, Boolean> formsEnable = formsEnableTemp;
 
-                Log.e("Service:", serviceNameField);
-                Log.e("Service:", servicePriceEditText.getText().toString());
-
-
+                //checks if service name already exists and if not, adds the service to database
                 DatabaseReference serviceExists = db.getReference("services/" + serviceNameField);
                 serviceExists.addValueEventListener(new ValueEventListener()
                 {
                     public void onDataChange(DataSnapshot data)
                     {
                         Log.e("DATA FOR SERVICE REQUEST:", String.valueOf(data.exists()));
-                        if (serviceExistsCheck){
+
+                        if (serviceExistsTracker){
                             if(data.exists())
                             {
                                 Toast.makeText(getApplicationContext(),"Service already exists",Toast.LENGTH_SHORT).show();
+                                setContentView(R.layout.activity_create_new_services);
                             }
                             else {
                                 Toast.makeText(getApplicationContext(), "Processing New Service", Toast.LENGTH_SHORT).show();
                                 DatabaseReference addService = db.getReference("services/" + serviceNameField);
                                 addService.setValue(new Service(serviceNameField, fieldsEnable, formsEnable, servicePriceField));
-                                serviceExistsCheck = false;
+                                serviceExistsTracker = false;
+
+                                Intent intent = new Intent(CreateNewServices.this, CurrentService.class);
+                                startActivity(intent);
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-
-                Intent intent = new Intent(this, CurrentService.class);
-                startActivity(intent);
             }
 
             //none selected
@@ -177,13 +177,13 @@ public class CreateNewServices extends AppCompatActivity {
             //nothing in forms selected
             else if (firstname==false && lastname==false && address==false && dob==false && license==false)   {
                 setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Select at least one Document Info",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Select at least one Form Info",Toast.LENGTH_LONG).show();
 
             }
             //nothing in documents selected
             else if (status==false && photoID==false && resident==false)  {
                 setContentView(R.layout.activity_create_new_services);
-                Toast.makeText(getApplicationContext(),"Select at least one Form Info",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Select at least one Document Info",Toast.LENGTH_LONG).show();
 
             }
             //Make sure not only address or dob field is checked
@@ -192,6 +192,7 @@ public class CreateNewServices extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Select at least one name field",Toast.LENGTH_LONG).show();
 
             }
+            //Makes sure the price is in correct format
             else if(!priceValid){
                 setContentView(R.layout.activity_create_new_services);
                 Toast.makeText(getApplicationContext(),"Maximum Two Decimals for Price",Toast.LENGTH_LONG).show();
@@ -200,6 +201,7 @@ public class CreateNewServices extends AppCompatActivity {
 
     }
 
+    //sends admin back to welcome page
     public void onClickWelomePage(View view) {
         Intent intent = new Intent(this, AdminWelcome.class);
         startActivity(intent);
