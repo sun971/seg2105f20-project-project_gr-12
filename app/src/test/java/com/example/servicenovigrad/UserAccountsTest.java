@@ -10,13 +10,13 @@ import static org.junit.Assert.*;
 public class UserAccountsTest {
     @Test
     public void getAccountTypeTest(){
-        EmployeeAccount empAccount = new EmployeeAccount("Peter", "Griffin", "pgriff@gmail.com", "peter123");
+        EmployeeAccount empAccount = new EmployeeAccount("asdfaksjdie","Peter", "Griffin", "pgriff@gmail.com", "peter123");
 
         assertEquals("getAccountType() fails to return 'employee'","employee", empAccount.getAccountType());
     }
     @Test
     public void getFirstNameTest(){
-        CustomerAccount cusAccount = new CustomerAccount("Peter", "Griffin", "pgriff@gmail.com", "peter123");
+        CustomerAccount cusAccount = new CustomerAccount("asdfaksjdie","Peter", "Griffin", "pgriff@gmail.com", "peter123");
 
         assertEquals("getFirstName() fails to return 'Peter'","Peter", cusAccount.getFirstName());
     }
