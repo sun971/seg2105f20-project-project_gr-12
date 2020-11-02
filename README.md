@@ -2,6 +2,5 @@
 seg2105f20-project-project_gr-12 created by GitHub Classroom
 
 Build Status
-[![Build
-Status](https://circleci.com/gh/SEG2105-uottawa/seg2105f20-project-project_gr-12.png?branch=master)](https://circle
+[![BuildStatus](https://circleci.com/gh/SEG2105-uottawa/seg2105f20-project-project_gr-12.png?branch=master)](https://circle
 ci.com/gh/SEG2105-uottawa/seg2105f20-project-project_gr-12g)
