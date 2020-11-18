@@ -4,4 +4,9 @@
     <string name="deleteMessage">Delete Accounts</string>
     <string name="enterEmail">Enter the email of the user you wish to delete:</string>
     <string name="enterInEmail">Enter in the email of the account to delete</string>
+    <string name="firstName">Error Loading Name</string>
+    <string name="lastName">Error Loading Last Name</string>
+    <string name="dob">Error Loading Date of Birth</string>
+    <string name="address">Error Loading Address</string>
+    <string name="licenseType">Error Loading License Type</string>
 </resources>

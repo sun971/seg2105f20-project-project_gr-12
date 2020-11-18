@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DeleteAccount"></activity>
+        <activity android:name=".ViewRequest"></activity>
+        <activity android:name=".DeleteAccount" />
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +23,7 @@
         <activity android:name=".Signup" />
         <activity android:name=".AdminWelcome" />
         <activity android:name=".CurrentService" />
-        <activity android:name=".CreateNewServices"></activity>
-
+        <activity android:name=".CreateNewServices" />
     </application>
 
 </manifest>
