@@ -80,7 +80,7 @@
             android:id="@+id/proofOfStatusTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Proof of Residence" />
+            android:text="Proof of Status" />
 
         <ImageView
             android:id="@+id/proofOfStatusImage"
