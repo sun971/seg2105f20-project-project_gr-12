@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,10 +16,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth session;
+    private FirebaseDatabase mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,8 @@ public class Login extends AppCompatActivity {
 
         // Initialize Firebase Auth
         session = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();//new
+
     }
 
     // JUST TESTING IF CAN READ IF USER IS LOGGED IN OR NOT
@@ -43,9 +53,9 @@ public class Login extends AppCompatActivity {
                 Intent intent = new Intent(this, AdminWelcome.class);
                 startActivity(intent);
             }
-            Intent intent = new Intent(this, WelcomePage.class);
-            startActivity(intent);
-            //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, WelcomePage.class); // this maybe game changer
+                startActivity(intent);
+                //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -108,8 +118,28 @@ public class Login extends AppCompatActivity {
                                 startActivity(redirectToWelcome);
                             }
                             else if (!email.equals("admin@admin.com")) {
-                                Intent redirectToWelcome = new Intent(Login.this, WelcomePage.class);
-                                startActivity(redirectToWelcome);
+                                //check if user is an employee account
+                                String id = user.getUid();
+                                DatabaseReference userData = mDatabase.getReference("users/" + id);
+
+                                userData.addListenerForSingleValueEvent(
+                                        new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                //need to add in checks to make sure the employee number is checked
+                                                if((snapshot.child("accountType").getValue()).equals("employee")){
+                                                    Intent redirectToWelcome = new Intent(Login.this, EmployeeWelcome.class);
+                                                    startActivity(redirectToWelcome);
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+
+                                        }
+
+                                );
                             }
 
                         }
