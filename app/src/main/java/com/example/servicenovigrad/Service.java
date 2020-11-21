@@ -3,6 +3,7 @@ package com.example.servicenovigrad;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Service {
     private String name;
@@ -70,5 +71,14 @@ public class Service {
     @Override
     public String toString() {
         return name;
+    }
+
+    public boolean equals(Service service) {
+        boolean sameName = name.equals(service.getName());
+        boolean samePrice = price == service.getPrice();
+        boolean sameRequiredInfo = requiredInfo.equals(service.getRequiredInfo());
+        boolean sameRequiredDocs = requiredDocs.equals(service.getRequiredDocs());
+
+        return (sameName && samePrice && sameRequiredDocs && sameRequiredInfo);
     }
 }

@@ -203,7 +203,7 @@ public class ViewRequest extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 EmployeeAccount account = snapshot.getValue(EmployeeAccount.class);
-                account.removeServiceRequest(currentRequest);
+                //account.removeServiceRequest(currentRequest);
                 dbUserRef.setValue(account);
                 //send notif to user of acceptance
                 goBack();
@@ -221,7 +221,7 @@ public class ViewRequest extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 EmployeeAccount account = snapshot.getValue(EmployeeAccount.class);
-                account.removeServiceRequest(currentRequest);
+                //account.removeServiceRequest(currentRequest);
                 dbUserRef.setValue(account);
                 //send notif to user of rejection
                 goBack();

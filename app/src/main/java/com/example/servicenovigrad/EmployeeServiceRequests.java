@@ -55,26 +55,28 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         DatabaseReference dbRequestsRef = dbRootRef.child("users").child(currentUser.getUid()).child("activeRequests");
 
         //Finds all the current services in the database and displays them in list view
-        dbRequestsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                requests.clear();
+        if (dbRequestsRef != null) {
+            dbRequestsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    requests.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String request = postSnapshot.child("firstName").getValue().toString();
-                    requests.add(request);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        String request = postSnapshot.child("firstName").getValue().toString();
+                        requests.add(request);
+                    }
+                    Collections.sort(requests);
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(EmployeeServiceRequests.this, R.layout.layout_services_list, R.id.textViewName, requests);
+                    listViewRequests.setAdapter(arrayAdapter);
+
                 }
-                Collections.sort(requests);
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(EmployeeServiceRequests.this, R.layout.layout_services_list, R.id.textViewName, requests);
-                listViewRequests.setAdapter(arrayAdapter);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     protected void onClickBack(View v) {

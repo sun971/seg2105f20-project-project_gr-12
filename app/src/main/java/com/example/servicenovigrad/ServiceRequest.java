@@ -100,32 +100,63 @@ public class ServiceRequest {
         return proofOfStatusUid;
     }
 
-    public static void main(String[] args) {
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("awda@dawda.com", "awdwdadw");
+    public boolean equals(ServiceRequest request) {
+        boolean sameFirstName;
+        if (firstName == null) {
+            sameFirstName = request.getFirstName() == null;
+        } else {
+            sameFirstName = firstName.equals(request.getFirstName());
+        }
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        String id = user.getUid();
-        DatabaseReference userData = mDatabase.getReference("users/"+id);
+        boolean sameLastName;
+        if (lastName == null) {
+            sameLastName = request.getLastName() == null;
+        } else {
+            sameLastName = lastName.equals(request.getLastName());
+        }
 
-        userData.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<ServiceRequest> serviceRequests = new ArrayList<ServiceRequest>();
-                        serviceRequests.add(new ServiceRequest("Marshall", "Steele", "123 Guac Lane", "12/22/1997", LicenseType.G2, "hello.jpg", "res.png", "stat.img"));
-                        EmployeeAccount thisAccount = snapshot.getValue(EmployeeAccount.class);
-                        thisAccount.addServiceRequest(new ServiceRequest("Marshall", "Steele", "123 Guac Lane", "12/22/1997", LicenseType.G2, "hello.jpg", "res.png", "stat.img"));
-                        //OVERWRITE THIS ENTRIES SERVICE LIST
-                    }
+        boolean sameAddress;
+        if (address == null) {
+            sameAddress = request.getAddress() == null;
+        } else {
+            sameAddress = address.equals(request.getAddress());
+        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+        boolean sameDob;
+        if (dob == null) {
+            sameDob = request.getDob() == null;
+        } else {
+            sameDob = dob.equals(request.getDob());
+        }
 
-                    }
-                }
+        boolean sameLicenseType;
+        if (licenseType == null) {
+            sameLicenseType = request.getLicenseType() == null;
+        } else {
+            sameLicenseType = licenseType == request.getLicenseType();
+        }
 
-        );
+        boolean sameCustomerPhotoUid;
+        if (customerPhotoUid == null) {
+            sameCustomerPhotoUid = request.getCustomerPhotoUid() == null;
+        }else {
+            sameCustomerPhotoUid = customerPhotoUid.equals(request.getCustomerPhotoUid());
+        }
+
+        boolean sameProofOfResidencePhotoUid;
+        if (proofOfResidenceUid == null) {
+            sameProofOfResidencePhotoUid = request.getProofOfResidenceUid() == null;
+        } else {
+            sameProofOfResidencePhotoUid = proofOfResidenceUid.equals(request.getProofOfResidenceUid());
+        }
+
+        boolean sameProofOfStatusPhotoUid;
+        if (proofOfStatusUid == null) {
+            sameProofOfStatusPhotoUid = request.getProofOfStatusUid() == null;
+        } else {
+            sameProofOfStatusPhotoUid = proofOfStatusUid.equals(request.getProofOfStatusUid());
+        }
+        return (sameFirstName && sameLastName && sameAddress && sameDob && sameLicenseType && sameCustomerPhotoUid && sameProofOfResidencePhotoUid && sameProofOfStatusPhotoUid);
     }
+
 }

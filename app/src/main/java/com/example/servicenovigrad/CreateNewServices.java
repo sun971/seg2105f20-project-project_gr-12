@@ -128,11 +128,12 @@ public class CreateNewServices extends AppCompatActivity {
                 fieldsEnableTemp.put("lastNameFieldEnable", lastname);
                 fieldsEnableTemp.put("addressFieldEnable", address);
                 fieldsEnableTemp.put("dobFieldEnable", dob);
+                fieldsEnableTemp.put("licenseFormEnable", license);
 
                 formsEnableTemp.put("statusFormEnable", status);
                 formsEnableTemp.put("photoIDFormEnable", photoID);
                 formsEnableTemp.put("residentFormEnable", resident);
-                formsEnableTemp.put("licenseFormEnable", license);
+
 
                 final HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
                 final HashMap<String, Boolean> formsEnable = formsEnableTemp;
