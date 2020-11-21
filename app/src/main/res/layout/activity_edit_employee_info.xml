@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".SetEmployeeInfo">
+    android:layout_height="match_parent"
+    tools:context=".EditEmployeeInfo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,11 +16,11 @@
             android:layout_height="50dp" />
 
         <TextView
-            android:id="@+id/welcomeEmployee"
+            android:id="@+id/editMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/welcomeEmployee"
+            android:text="@string/editMessage"
             android:textAlignment="center"
             android:textSize="28sp" />
 
@@ -30,11 +30,11 @@
             android:layout_gravity="center" />
 
         <TextView
-            android:id="@+id/setUpMessage"
+            android:id="@+id/editInstructionsMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/setUpMessage"
+            android:text="@string/editInstructionsMessage"
             android:textAlignment="center"
             android:textSize="18sp" />
 
@@ -44,20 +44,20 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/postalAddressId"
+            android:id="@+id/postalAddressId2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPostalAddress"
-            android:hint="@string/address" />
+            android:hint="@string/address"
+            android:inputType="textPostalAddress" />
 
         <EditText
-            android:id="@+id/phoneId"
+            android:id="@+id/phoneId2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="phone"
-            android:hint="@string/phone"/>
+            android:hint="@string/phone"
+            android:inputType="phone" />
 
         <Space
             android:layout_width="match_parent"
@@ -65,24 +65,12 @@
             android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/formatButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:onClick="inputFormat"
-            android:text="@string/inputFormat"
-            android:textColor="#F1EFF4" />
-
-        <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/submitButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@drawable/round_button"
-            android:onClick="onClick"
             android:text="@string/submit"
             android:textColor="#F1EFF4" />
-
     </LinearLayout>
-
 </RelativeLayout>

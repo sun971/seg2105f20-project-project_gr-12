@@ -54,6 +54,9 @@ public abstract class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    //public abstract void setAddress(String address);
+    //public abstract void setPhone(String phone);
 }
 
 /*

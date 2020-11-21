@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EditEmployeeInfo"></activity>
+        <activity android:name=".SetEmployeeInfo" />
         <activity android:name=".EmployeeServiceRequests"></activity>
         <activity android:name=".ViewRequest" />
         <activity android:name=".DeleteAccount" />

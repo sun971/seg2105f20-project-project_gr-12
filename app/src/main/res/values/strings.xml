@@ -5,15 +5,16 @@
     <string name="enterEmail">Enter the email of the user you wish to delete:</string>
     <string name="enterInEmail">Enter in the email of the account to delete</string>
     <string name="setUpMessage">Please Enter an Address and Phone Number to Finish Setting Up Your Account</string>
+    <string name="address">address</string>
     <string name="phone">phone</string>
     <string name="submit">Submit</string>
     <string name="welcomeEmployee">Welcome Employee</string>
     <string name="editMessage">Edit Branch Information</string>
     <string name="editInstructionsMessage">Enter at least one field to be updated:</string>
+    <string name="inputFormat">Example Input Format</string>
     <string name="firstName">Error Loading Name</string>
     <string name="lastName">Error Loading Last Name</string>
     <string name="dob">Error Loading Date of Birth</string>
-    <string name="address">address</string>
     <string name="licenseType">Error Loading License Type</string>
     <string name="requestAddress">Error Loading Address</string>
 </resources>

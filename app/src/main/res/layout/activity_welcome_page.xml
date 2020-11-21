@@ -8,7 +8,7 @@ android:layout_alignParentTop="true"
 tools:context=".WelcomePage">
 
 <TextView
-    android:id="@+id/welcomeMessage"
+    android:id="@+id/welcomeEmployee"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"

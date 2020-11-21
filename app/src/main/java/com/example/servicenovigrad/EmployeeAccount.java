@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeAccount extends Account {
+    String address;
+    String phone;
 
     private List<ServiceRequest> activeRequests;
     private List<String> branchServices;
@@ -39,8 +41,30 @@ public class EmployeeAccount extends Account {
         activeRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
         activeRequests.add(new ServiceRequest("Marshall2", "Steele2", "myAddress2", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
     }
+    EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password, String address, String phone) {
+        super(uid, firstName, lastName, eMail, password);
+        this.address= address;
+        this.phone = phone;
+    }
+
     public String getAccountType() {
         return "employee";
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<ServiceRequest> getServiceRequests(){

@@ -7,12 +7,9 @@ package com.example.servicenovigrad;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.View;
-        import android.widget.EditText;
         import android.widget.TextView;
 
 //import com.google.firebase.database.FirebaseDatabase;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.database.DataSnapshot;
@@ -20,8 +17,6 @@ package com.example.servicenovigrad;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
-
-        import java.util.Calendar;
 
 public class WelcomePage extends AppCompatActivity {
     private FirebaseAuth session;
@@ -75,7 +70,7 @@ public class WelcomePage extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            TextView helloTextView = (TextView) findViewById(R.id.welcomeMessage);
+                            TextView helloTextView = (TextView) findViewById(R.id.welcomeEmployee);
                             helloTextView.setText("Welcome "+snapshot.child("firstName").getValue()+"! you are logged in as "+snapshot.child("accountType").getValue());
                         }
 
