@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewRequest"></activity>
+        <activity android:name=".EmployeeServiceRequests"></activity>
+        <activity android:name=".ViewRequest" />
         <activity android:name=".DeleteAccount" />
         <activity android:name=".Login">
             <intent-filter>

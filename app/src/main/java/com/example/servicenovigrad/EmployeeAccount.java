@@ -1,5 +1,6 @@
 package com.example.servicenovigrad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAccount extends Account {
@@ -8,6 +9,7 @@ public class EmployeeAccount extends Account {
 
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password) {
         super(uid, firstName, lastName, eMail, password);
+        activeRequests = new ArrayList<ServiceRequest>();
     }
     public String getAccountType() {
         return "employee";
@@ -17,7 +19,5 @@ public class EmployeeAccount extends Account {
         activeRequests.add(request);
     }
 
-    public boolean removeServiceRequest(ServiceRequest request) {
-        return activeRequests.remove(request);
-    }
+    public boolean removeServiceRequest(ServiceRequest request) { return activeRequests.remove(request); }
 }

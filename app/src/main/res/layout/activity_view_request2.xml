@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
@@ -42,26 +41,13 @@
             android:id="@+id/addressTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/address" />
+            android:text="@string/requestAddress" />
 
         <TextView
             android:id="@+id/licenseTypeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/licenseType" />
-
-        <TextView
-            android:id="@+id/customerPhotoTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Customer Photo" />
-
-        <ImageView
-            android:id="@+id/customerPhotoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
 
         <TextView
             android:id="@+id/proofOfResidenceTitle"
@@ -71,6 +57,19 @@
 
         <ImageView
             android:id="@+id/proofOfResidenceImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/customerPhotoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Photo" />
+
+        <ImageView
+            android:id="@+id/customerPhotoImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -92,7 +91,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom"
             android:orientation="horizontal">
 
             <Button
@@ -100,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="onClickReject"
                 android:text="Reject" />
 
             <Button
@@ -107,9 +106,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="onClickAccept"
                 android:text="Accept" />
+
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

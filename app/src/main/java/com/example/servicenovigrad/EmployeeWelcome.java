@@ -3,6 +3,7 @@ package com.example.servicenovigrad;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -76,6 +77,8 @@ public class EmployeeWelcome extends AppCompatActivity {
     public void ChangeServices(View view) {
     }
 
-    public void ManageServiceRequest(View view) {
+    public void onClickManageServiceRequest(View view) {
+        Intent intent = new Intent(this, EmployeeServiceRequests.class);
+        startActivity(intent);
     }
 }

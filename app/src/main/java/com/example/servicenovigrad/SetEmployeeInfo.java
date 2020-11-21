@@ -38,8 +38,8 @@ public class SetEmployeeInfo extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            TextView empWelcome = (TextView) findViewById(R.id.welcomeEmployee);
-                            empWelcome.setText("Welcome "+snapshot.child("firstName").getValue()+" "+snapshot.child("lastName").getValue());
+                            //TextView empWelcome = (TextView) findViewById(R.id.welcomeEmployee);
+                            //empWelcome.setText("Welcome "+snapshot.child("firstName").getValue()+" "+snapshot.child("lastName").getValue());
                         }
 
                         @Override
