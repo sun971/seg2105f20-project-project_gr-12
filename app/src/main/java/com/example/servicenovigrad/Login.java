@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
                 Intent intent = new Intent(this, AdminWelcome.class);
                 startActivity(intent);
             }
-                Intent intent = new Intent(this, WelcomePage.class); // this maybe game changer
+                Intent intent = new Intent(this, EmployeeWelcome.class); // this maybe game changer
                 startActivity(intent);
                 //Toast.makeText(Login.this, "USER LOGGED IN", Toast.LENGTH_LONG).show();
         }

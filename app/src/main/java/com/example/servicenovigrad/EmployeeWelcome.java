@@ -63,6 +63,12 @@ public class EmployeeWelcome extends AppCompatActivity {
     }
 
     public void SignOut(View view) {
+        if (view.getId() == R.id.btnSignOut) {
+            session.signOut();
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+
+        }
     }
 
     public void EditAddress(View view) {
@@ -75,6 +81,8 @@ public class EmployeeWelcome extends AppCompatActivity {
     }
 
     public void ChangeServices(View view) {
+        Intent intent = new Intent(this, CurrentBranchServices.class);
+        startActivity(intent);
     }
 
     public void onClickManageServiceRequest(View view) {

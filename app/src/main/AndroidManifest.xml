@@ -27,6 +27,10 @@
         <activity android:name=".AdminWelcome" />
         <activity android:name=".CurrentService" />
         <activity android:name=".CreateNewServices" />
+        <activity android:name=".AddBranchService"></activity>
+        <activity android:name=".CurrentBranchServices" />
+        <activity android:name=".EmployeeWelcome" />
+
     </application>
 
 </manifest>
