@@ -8,7 +8,7 @@ public class EmployeeAccount extends Account {
     String address;
     String phone;
 
-    private List<ServiceRequest> activeRequests;
+    private List<ServiceRequest> serviceRequests;
     private List<String> branchServices;
 
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password) {
@@ -31,15 +31,15 @@ public class EmployeeAccount extends Account {
         HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
         HashMap<String, Boolean> formsEnable = formsEnableTemp;
 
-        activeRequests = new ArrayList<ServiceRequest>();
+        serviceRequests = new ArrayList<ServiceRequest>();
         branchServices = new ArrayList<String>();
 
         branchServices.add("asdfg");
         branchServices.add("asdfg");
 
 
-        activeRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
-        activeRequests.add(new ServiceRequest("Marshall2", "Steele2", "myAddress2", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
+        serviceRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
+        serviceRequests.add(new ServiceRequest("Marshall2", "Steele2", "myAddress2", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
     }
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password, String address, String phone) {
         super(uid, firstName, lastName, eMail, password);
@@ -68,8 +68,10 @@ public class EmployeeAccount extends Account {
     }
 
     public List<ServiceRequest> getServiceRequests(){
-        return activeRequests;
+        return serviceRequests;
     }
+
+    public void removeServiceRequest(ServiceRequest request) {serviceRequests.remove(request); }
 
     public List<String> getBranchServices(){
         return branchServices;

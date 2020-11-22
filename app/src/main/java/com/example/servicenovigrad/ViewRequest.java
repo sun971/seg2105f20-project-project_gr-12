@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,9 +20,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ViewRequest extends AppCompatActivity {
     TextView firstNameText;
@@ -48,7 +50,7 @@ public class ViewRequest extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_request2);
+        setContentView(R.layout.activity_view_request);
 
         //Get GUI Elements
         firstNameText = (TextView)findViewById(R.id.firstNameTitle);
@@ -116,7 +118,8 @@ public class ViewRequest extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Error Loading Request", Toast.LENGTH_LONG).show();
+                goBack();
             }
         });
 
@@ -161,7 +164,7 @@ public class ViewRequest extends AppCompatActivity {
         if (firstName == null) {
             firstNameText.setVisibility(View.GONE);
         } else {
-            firstNameText.setText(firstName);
+            firstNameText.setText("First Name: " + firstName);
         }
     }
 
@@ -169,21 +172,21 @@ public class ViewRequest extends AppCompatActivity {
         if (lastName == null) {
             lastNameText.setVisibility(View.GONE);
         } else {
-            lastNameText.setText(lastName);
+            lastNameText.setText("Last Name: " + lastName);
         }
     }
     private void setAddress(String address) {
         if (address == null) {
             addressText.setVisibility(View.GONE);
         } else {
-            addressText.setText(address);
+            addressText.setText("Address: " + address);
         }
     }
     private void setDob(String dob) {
         if (dob == null) {
             dobText.setVisibility(View.GONE);
         } else {
-            dobText.setText(dob);
+            dobText.setText("DOB: " + dob);
         }
     }
     private void setLicenseType(LicenseType licenseType) {
@@ -192,11 +195,11 @@ public class ViewRequest extends AppCompatActivity {
         } else {
             switch (licenseType) {
                 case G1:
-                    licenseTypeText.setText("G1");
+                    licenseTypeText.setText("License Type: G1");
                 case G2:
-                    licenseTypeText.setText("G2");
+                    licenseTypeText.setText("License Type: G2");
                 case G:
-                    licenseTypeText.setText("G");
+                    licenseTypeText.setText("License Type: G");
             }
 
         }
@@ -226,40 +229,61 @@ public class ViewRequest extends AppCompatActivity {
         }
     }
 
-    protected void onClickAccept(View v) {
-        dbUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                EmployeeAccount account = snapshot.getValue(EmployeeAccount.class);
-                //account.removeServiceRequest(currentRequest);
-                dbUserRef.setValue(account);
-                //send notif to user of acceptance
-                goBack();
-            }
+    public void Accept(View v) {
+        DatabaseReference dbRequestsRef = dbUserRef.child("serviceRequests");
+        if (dbRequestsRef != null) {
+            dbRequestsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<ServiceRequest> requests = new ArrayList<ServiceRequest>();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        ServiceRequest request = postSnapshot.getValue(ServiceRequest.class);
+                        if (!request.equals(currentRequest)) {
+                            requests.add(request);
+                        }
+                    }
 
-            }
-        });
+                    dbUserRef.child("serviceRequests").setValue(requests);
+                    Toast.makeText(getApplicationContext(), "Request Accepted", Toast.LENGTH_LONG).show();
+                    goBack();
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
-    protected void onClickReject(View v) {
-        dbUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                EmployeeAccount account = snapshot.getValue(EmployeeAccount.class);
-                //account.removeServiceRequest(currentRequest);
-                dbUserRef.setValue(account);
-                //send notif to user of rejection
-                goBack();
-            }
+    public void Reject(View v) {
+        DatabaseReference dbRequestsRef = dbUserRef.child("serviceRequests");
+        if (dbRequestsRef != null) {
+            dbRequestsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<ServiceRequest> requests = new ArrayList<ServiceRequest>();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        ServiceRequest request = postSnapshot.getValue(ServiceRequest.class);
+                        if (!request.equals(currentRequest)) {
+                            requests.add(request);
+                        }
+                    }
 
-            }
-        });
+                    dbUserRef.child("serviceRequests").setValue(requests);
+                    Toast.makeText(getApplicationContext(), "Request Rejected", Toast.LENGTH_LONG).show();
+                    goBack();
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
     }
 
     private void goBack() {

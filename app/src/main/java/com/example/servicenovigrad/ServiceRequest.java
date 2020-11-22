@@ -36,6 +36,8 @@ public class ServiceRequest {
         this.proofOfStatusUid = proofOfStatusUid;
     }
 
+    ServiceRequest() {}
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
