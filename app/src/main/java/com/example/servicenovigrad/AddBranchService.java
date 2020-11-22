@@ -58,9 +58,7 @@ public class AddBranchService extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String service = services.get(i);
-                Log.d("test", service);
                 showAddDialog(service);
-                Log.d("test", "testing: ");
                 return true;
             }
         });
@@ -138,10 +136,14 @@ public class AddBranchService extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!branchList.contains(serviceName)) {
-                    addService(serviceName);
+                if(branchList != null) {
+                    if (!branchList.contains(serviceName)) {
+                        addService(serviceName);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "ERROR: Service Already In Branch", Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(), "ERROR: Service Already In Branch", Toast.LENGTH_LONG).show();
+                    addService(serviceName);
                 }
                 dialog.dismiss();
             }
@@ -149,11 +151,17 @@ public class AddBranchService extends AppCompatActivity {
     }
 
     private void addService(String name) {
+
+        if(branchList == null) {
+            branchList = new ArrayList<String>();
+        }
         branchList.add(name);
+
         FirebaseUser user = session.getCurrentUser();
         String id = user.getUid();
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("users/" + id + "/branchServices");
         dR.setValue(branchList);
+
         Toast.makeText(getApplicationContext(), "Service Added Successfully", Toast.LENGTH_SHORT).show();
     }
 

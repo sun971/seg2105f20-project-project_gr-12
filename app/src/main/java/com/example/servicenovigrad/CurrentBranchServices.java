@@ -44,7 +44,6 @@ public class CurrentBranchServices extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("test", "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_branch_services);
 
@@ -84,6 +83,10 @@ public class CurrentBranchServices extends AppCompatActivity {
                     servicesList = snapshot.child("branchServices").getValue(t);
 
                     if (servicesList != null) {
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(CurrentBranchServices.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
+                        listViewBranchServices.setAdapter(arrayAdapter);
+                    }else{
+                        servicesList = new ArrayList<>();
                         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(CurrentBranchServices.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
                         listViewBranchServices.setAdapter(arrayAdapter);
                     }

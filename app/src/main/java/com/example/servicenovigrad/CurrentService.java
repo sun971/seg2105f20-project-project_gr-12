@@ -123,7 +123,7 @@ public class CurrentService extends AppCompatActivity {
     private void deleteService(String name) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
         dR.removeValue();
-        //Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_SHORT).show();
     }
 
     //sends user to the create services page
