@@ -24,33 +24,15 @@ public class EmployeeAccount extends Account {
 
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password) {
         super(uid, firstName, lastName, eMail, password);
-        double servicePriceField = 12.65;
-
-        HashMap<String, Boolean> fieldsEnableTemp = new HashMap<String, Boolean>();
-        HashMap<String, Boolean> formsEnableTemp = new HashMap<String, Boolean>();
-
-        fieldsEnableTemp.put("firstNameFieldEnable", true);
-        fieldsEnableTemp.put("lastNameFieldEnable", true);
-        fieldsEnableTemp.put("addressFieldEnable", true);
-        fieldsEnableTemp.put("dobFieldEnable", false);
-        fieldsEnableTemp.put("licenseFormEnable", false);
-
-        formsEnableTemp.put("statusFormEnable", false);
-        formsEnableTemp.put("photoIDFormEnable", true);
-        formsEnableTemp.put("residentFormEnable", true);
-
-        HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
-        HashMap<String, Boolean> formsEnable = formsEnableTemp;
+        address = null;
+        phone = null;
 
         serviceRequests = new ArrayList<ServiceRequest>();
         branchServices = new ArrayList<String>();
 
-        branchServices.add("asdfg");
-        branchServices.add("asdfg");
-
 
         serviceRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
-        serviceRequests.add(new ServiceRequest("Marshall2", "Steele2", "myAddress2", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
+        serviceRequests.add(new ServiceRequest("Bon", "Jovi", "myAddress2", "3/2/1962", LicenseType.G2, "asd", "asd", "asd"));
     }
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password, String address, String phone) {
         super(uid, firstName, lastName, eMail, password);
@@ -78,40 +60,6 @@ public class EmployeeAccount extends Account {
         this.phone = phone;
     }
 
-    public Boolean hasAddress() {
-        FirebaseAuth session = FirebaseAuth.getInstance();
-        FirebaseUser user = session.getCurrentUser();
-        String id = user.getUid();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference addRef = rootRef.child("users").child(id).child("address");
-        final Boolean[] exists = {false};
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
-                    exists[0] = true;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
-            }
-        };
-        addRef.addListenerForSingleValueEvent(eventListener);
-
-        //if (address !=null){
-        //    return true;
-        //}
-        return exists[0];
-    }
-
-    public Boolean hasPhone() {
-        if (phone !=null){
-            return true;
-        }
-        return false;
-    }
 
     public List<ServiceRequest> getServiceRequests(){
         return serviceRequests;

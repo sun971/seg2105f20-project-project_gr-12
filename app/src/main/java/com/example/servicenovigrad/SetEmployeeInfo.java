@@ -70,6 +70,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
                                 addPhone.setValue(emp);
                                 emp.setAddress(address);
                                 emp.setPhone(phone);
+                                //dbUserReference.child("address").setValue(address);
                                 Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent(SetEmployeeInfo.this, WelcomePage.class);
