@@ -1,12 +1,23 @@
 package com.example.servicenovigrad;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeAccount extends Account {
-    String address;
-    String phone;
+    private String address;
+    private String phone;
 
     private List<ServiceRequest> serviceRequests;
     private List<String> branchServices;
@@ -65,6 +76,41 @@ public class EmployeeAccount extends Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Boolean hasAddress() {
+        FirebaseAuth session = FirebaseAuth.getInstance();
+        FirebaseUser user = session.getCurrentUser();
+        String id = user.getUid();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference addRef = rootRef.child("users").child(id).child("address");
+        final Boolean[] exists = {false};
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    exists[0] = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
+            }
+        };
+        addRef.addListenerForSingleValueEvent(eventListener);
+
+        //if (address !=null){
+        //    return true;
+        //}
+        return exists[0];
+    }
+
+    public Boolean hasPhone() {
+        if (phone !=null){
+            return true;
+        }
+        return false;
     }
 
     public List<ServiceRequest> getServiceRequests(){

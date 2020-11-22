@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -44,18 +45,10 @@ public class SetEmployeeInfo extends AppCompatActivity {
             setContentView(R.layout.activity_set_employee_info);
             Toast.makeText(getApplicationContext(),"All fields require a value",Toast.LENGTH_LONG).show();
 
-            //validate the first and last name contain only letters
-        } else if (!address.matches("[a-zA-Z0-9]+") || !phone.matches("[0-9]+")) {
-            Toast.makeText(getApplicationContext(), "First name and Last name fields must only contain letters", Toast.LENGTH_LONG).show();
+        } else if (!address.matches("[a-zA-Z0-9 ]+") || !phone.matches("[0-9]+")) {
+            Toast.makeText(getApplicationContext(), "Phone number must only contain numbers and Address can't contain any symbols.", Toast.LENGTH_LONG).show();
 
         }else {
-            //String user = mAuth.getCurrentUser().getEmail();
-            //String id = mAuth.getCurrentUser().getUid();
-
-            //If account successfully created
-            //DatabaseReference userReference = mDatabase.getReference("users/"+id);
-
-            //userReference.setValue(new EmployeeAccount(id, firstName, lastName, email, password));
 
             FirebaseUser user = session.getCurrentUser();
             if (user != null) {
@@ -66,9 +59,23 @@ public class SetEmployeeInfo extends AppCompatActivity {
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
+                                //emp.setAddress(address);
+                                //emp.setPhone(phone);
+                                //Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
+
+
+                                DatabaseReference addPhone = mDatabase.getReference("users/"+id);
                                 EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
+                                addPhone.setValue(emp);
                                 emp.setAddress(address);
                                 emp.setPhone(phone);
+                                Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
+
+                                Intent intent = new Intent(SetEmployeeInfo.this, WelcomePage.class);
+                                startActivity(intent);
+
+
                             }
 
                             @Override
@@ -83,7 +90,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
             }
 
 
-            Intent nextIntent = new Intent(SetEmployeeInfo.this, SetEmployeeInfo.class); //whatever the set working class is called
+            Intent nextIntent = new Intent(SetEmployeeInfo.this, Login.class); //whatever the set working class is called
 
             startActivity(nextIntent);
 
