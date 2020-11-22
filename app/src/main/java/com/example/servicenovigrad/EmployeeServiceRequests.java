@@ -39,8 +39,32 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         listViewRequests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String request = requests.get(i);
-                sendToViewRequest(request);
+
+
+                final String request = requests.get(i);
+
+
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference dbRootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference dbRequestsRef = dbRootRef.child("users").child(currentUser.getUid()).child("serviceRequests");
+
+                dbRequestsRef.orderByChild("firstName").equalTo(request).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot childRequest: snapshot.getChildren())  {
+                            sendToViewRequest(childRequest.getKey());
+                            break;
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
             }
         });
@@ -52,7 +76,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         FirebaseAuth fbAuthRef = FirebaseAuth.getInstance();
         FirebaseUser currentUser = fbAuthRef.getCurrentUser();
         DatabaseReference dbRootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dbRequestsRef = dbRootRef.child("users").child(currentUser.getUid()).child("activeRequests");
+        DatabaseReference dbRequestsRef = dbRootRef.child("users").child(currentUser.getUid()).child("serviceRequests");
 
         //Finds all the current services in the database and displays them in list view
         if (dbRequestsRef != null) {
@@ -79,7 +103,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         }
     }
 
-    protected void onClickBack(View v) {
+    public void onClickBack(View v) {
         Intent intent = new Intent(this, EmployeeWelcome.class);
         startActivity(intent);
     }

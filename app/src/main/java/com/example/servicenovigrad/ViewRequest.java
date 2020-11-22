@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -79,11 +80,36 @@ public class ViewRequest extends AppCompatActivity {
 
         requestId = getIntent().getExtras().getString("Request ID");
 
-
-        dbUserRef.child("activeRequests").child(requestId).addValueEventListener(new ValueEventListener() {
+        Log.d("SERVICE REQUEST ID", requestId);
+        dbUserRef.child("serviceRequests").child(requestId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ServiceRequest request = dataSnapshot.getValue(ServiceRequest.class);
+
+                // Store values
+                String firstName = String.valueOf(dataSnapshot.child("firstName").getValue());
+                String lastName = String.valueOf(dataSnapshot.child("lastName").getValue());
+                String address = String.valueOf(dataSnapshot.child("address").getValue());
+                String dob = String.valueOf(dataSnapshot.child("dob").getValue());
+
+                LicenseType licenseType;
+                String licenseReader = String.valueOf(dataSnapshot.child("licenseType").getValue());
+                if(licenseReader.equals("G1"))   {
+                    licenseType = LicenseType.G1;
+                }
+                else if(licenseReader.equals("G2")) {
+                    licenseType = LicenseType.G2;
+                }
+                else    {
+                    licenseType = LicenseType.G;
+                }
+
+
+
+                String customerPhotoUid = String.valueOf(dataSnapshot.child("customerPhotoUid").getValue());
+                String proofOfResidenceUid = String.valueOf(dataSnapshot.child("proofOfResidenceUid").getValue());
+                String proofOfStatusUid = String.valueOf(dataSnapshot.child("proofOfStatusUid").getValue());
+
+                ServiceRequest request = new ServiceRequest(firstName, lastName, address, dob, licenseType, customerPhotoUid, proofOfResidenceUid, proofOfStatusUid);
                 setUIElements(request);
                 setCurrentRequest(request);
 
@@ -101,6 +127,7 @@ public class ViewRequest extends AppCompatActivity {
     }
 
     private void setUIElements(ServiceRequest request) {
+
         String firstName;
         String lastName;
         String address;
@@ -127,6 +154,7 @@ public class ViewRequest extends AppCompatActivity {
         setCustomerPhoto(customerPhotoUid);
         setProofOfResidence(proofOfResidenceUid);
         setProofOfStatus(proofOfStatusUid);
+
     }
 
     private void setFirstName(String firstName) {
