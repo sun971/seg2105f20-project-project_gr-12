@@ -232,7 +232,7 @@ public class ViewRequest extends AppCompatActivity {
     public void Accept(View v) {
         DatabaseReference dbRequestsRef = dbUserRef.child("serviceRequests");
         if (dbRequestsRef != null) {
-            dbRequestsRef.addValueEventListener(new ValueEventListener() {
+            dbRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     List<ServiceRequest> requests = new ArrayList<ServiceRequest>();
@@ -260,7 +260,7 @@ public class ViewRequest extends AppCompatActivity {
     public void Reject(View v) {
         DatabaseReference dbRequestsRef = dbUserRef.child("serviceRequests");
         if (dbRequestsRef != null) {
-            dbRequestsRef.addValueEventListener(new ValueEventListener() {
+            dbRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     List<ServiceRequest> requests = new ArrayList<ServiceRequest>();
