@@ -1,45 +1,38 @@
 package com.example.servicenovigrad;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeAccount extends Account {
-    String address;
-    String phone;
+    private String address;
+    private String phone;
 
-    private List<ServiceRequest> activeRequests;
+    private List<ServiceRequest> serviceRequests;
     private List<String> branchServices;
 
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password) {
         super(uid, firstName, lastName, eMail, password);
-        double servicePriceField = 12.65;
+        address = null;
+        phone = null;
 
-        HashMap<String, Boolean> fieldsEnableTemp = new HashMap<String, Boolean>();
-        HashMap<String, Boolean> formsEnableTemp = new HashMap<String, Boolean>();
-
-        fieldsEnableTemp.put("firstNameFieldEnable", true);
-        fieldsEnableTemp.put("lastNameFieldEnable", true);
-        fieldsEnableTemp.put("addressFieldEnable", true);
-        fieldsEnableTemp.put("dobFieldEnable", false);
-        fieldsEnableTemp.put("licenseFormEnable", false);
-
-        formsEnableTemp.put("statusFormEnable", false);
-        formsEnableTemp.put("photoIDFormEnable", true);
-        formsEnableTemp.put("residentFormEnable", true);
-
-        HashMap<String, Boolean> fieldsEnable = fieldsEnableTemp;
-        HashMap<String, Boolean> formsEnable = formsEnableTemp;
-
-        activeRequests = new ArrayList<ServiceRequest>();
+        serviceRequests = new ArrayList<ServiceRequest>();
         branchServices = new ArrayList<String>();
 
-        branchServices.add("asdfg");
-        branchServices.add("asdfg");
 
-
-        activeRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
-        activeRequests.add(new ServiceRequest("Marshall2", "Steele2", "myAddress2", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
+        serviceRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
+        serviceRequests.add(new ServiceRequest("Bon", "Jovi", "myAddress2", "3/2/1962", LicenseType.G2, "asd", "asd", "asd"));
     }
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password, String address, String phone) {
         super(uid, firstName, lastName, eMail, password);
@@ -67,9 +60,12 @@ public class EmployeeAccount extends Account {
         this.phone = phone;
     }
 
+
     public List<ServiceRequest> getServiceRequests(){
-        return activeRequests;
+        return serviceRequests;
     }
+
+    public void removeServiceRequest(ServiceRequest request) {serviceRequests.remove(request); }
 
     public List<String> getBranchServices(){
         return branchServices;

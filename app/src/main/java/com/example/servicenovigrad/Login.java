@@ -119,17 +119,35 @@ public class Login extends AppCompatActivity {
                             }
                             else if (!email.equals("admin@admin.com")) {
                                 //check if user is an employee account
-                                String id = user.getUid();
+                                final String id = user.getUid();
                                 DatabaseReference userData = mDatabase.getReference("users/" + id);
+                                //DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                                //DatabaseReference userNameRef = rootRef.child("Users").child("Nick123");
 
                                 userData.addListenerForSingleValueEvent(
                                         new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString());
+                                                Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
+                                                boolean hasAddress = true;
+                                                if ((snapshot.child("address").getValue()) ==null){
+                                                    hasAddress=  false;
+                                                }
+
+
                                                 //need to add in checks to make sure the employee number is checked
-                                                if((snapshot.child("accountType").getValue()).equals("employee")){
+                                                if((snapshot.child("accountType").getValue()).equals("employee") && hasAddress){
                                                     Intent redirectToWelcome = new Intent(Login.this, EmployeeWelcome.class);
                                                     startActivity(redirectToWelcome);
+
+                                                }else if ((snapshot.child("accountType").getValue()).equals("employee") && !(hasAddress)){
+                                                    Intent redirectToSetInfo = new Intent(Login.this, SetEmployeeInfo.class);
+                                                    startActivity(redirectToSetInfo);
+
+                                                }else{
+                                                    Intent redirectToWelcomePage = new Intent(Login.this, WelcomePage.class);
+                                                    startActivity(redirectToWelcomePage);
                                                 }
                                             }
                                             @Override

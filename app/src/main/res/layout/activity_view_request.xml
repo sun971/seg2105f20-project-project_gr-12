@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onClickReject"
+                android:onClick="Reject"
                 android:text="Reject" />
 
             <Button
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onClickAccept"
+                android:onClick="Accept"
                 android:text="Accept" />
 
         </LinearLayout>
