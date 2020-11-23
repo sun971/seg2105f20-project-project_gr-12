@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@drawable/round_button"
+            android:onClick="onClick"
             android:text="@string/submit"
             android:textColor="#F1EFF4" />
     </LinearLayout>

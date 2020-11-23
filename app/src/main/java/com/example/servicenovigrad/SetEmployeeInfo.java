@@ -45,7 +45,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
             setContentView(R.layout.activity_set_employee_info);
             Toast.makeText(getApplicationContext(),"All fields require a value",Toast.LENGTH_LONG).show();
 
-        } else if (!address.matches("[a-zA-Z0-9 ]+") || !phone.matches("[0-9]+")) {
+        } else if (!address.matches("[a-zA-Z0-9 ]+") || !phone.matches("[0-9]+")) { //didn't include length constraints because addresses and phone numbers don't always have a fixed length
             Toast.makeText(getApplicationContext(), "Phone number must only contain numbers and Address can't contain any symbols.", Toast.LENGTH_LONG).show();
 
         }else {
@@ -59,10 +59,6 @@ public class SetEmployeeInfo extends AppCompatActivity {
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                //EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
-                                //emp.setAddress(address);
-                                //emp.setPhone(phone);
-                                //Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
 
 
                                 DatabaseReference addPhone = mDatabase.getReference("users/"+id);
@@ -70,8 +66,8 @@ public class SetEmployeeInfo extends AppCompatActivity {
                                 addPhone.setValue(emp);
                                 emp.setAddress(address);
                                 emp.setPhone(phone);
-                                //dbUserReference.child("address").setValue(address);
-                                Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
+
+                                Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent(SetEmployeeInfo.this, EmployeeWelcome.class);
                                 startActivity(intent);
@@ -91,7 +87,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
             }
 
 
-            Intent nextIntent = new Intent(SetEmployeeInfo.this, Login.class); //whatever the set working class is called
+            Intent nextIntent = new Intent(SetEmployeeInfo.this, Login.class);
 
             startActivity(nextIntent);
 

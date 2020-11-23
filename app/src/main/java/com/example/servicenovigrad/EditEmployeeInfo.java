@@ -30,11 +30,13 @@ public class EditEmployeeInfo extends AppCompatActivity {
         session = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
+        getCurrentUser();
     }
 
     public void onClick(View v) {
-        EditText addressField = (EditText)findViewById(R.id.postalAddressId);
-        EditText phoneField = (EditText)findViewById(R.id.phoneId);
+
+        EditText addressField = (EditText)findViewById(R.id.postalAddressId2);
+        EditText phoneField = (EditText)findViewById(R.id.phoneId2);
 
         final String address = addressField.getText().toString();
         final String phone = phoneField.getText().toString();
@@ -58,11 +60,6 @@ public class EditEmployeeInfo extends AppCompatActivity {
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                //EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
-                                //emp.setAddress(address);
-                                //emp.setPhone(phone);
-                                //Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
-
 
                                 DatabaseReference addPhone = mDatabase.getReference("users/"+id);
                                 EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
@@ -70,9 +67,9 @@ public class EditEmployeeInfo extends AppCompatActivity {
                                 emp.setAddress(address);
                                 emp.setPhone(phone);
                                 //dbUserReference.child("address").setValue(address);
-                                Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
 
-                                Intent intent = new Intent(EditEmployeeInfo.this, WelcomePage.class);
+                                Intent intent = new Intent(EditEmployeeInfo.this, EmployeeWelcome.class);
                                 startActivity(intent);
 
 
@@ -90,16 +87,12 @@ public class EditEmployeeInfo extends AppCompatActivity {
             }
 
 
-            Intent nextIntent = new Intent(EditEmployeeInfo.this, Login.class); //whatever the set working class is called
+            Intent nextIntent = new Intent(EditEmployeeInfo.this, Login.class);
 
             startActivity(nextIntent);
 
 
         }
-    }
-
-    public void inputFormat(View v) {
-        Toast.makeText(getApplicationContext(), "address: 11 Somewhere; phone: 5555555555", Toast.LENGTH_LONG).show();
     }
 
     public void getCurrentUser(){
@@ -113,11 +106,13 @@ public class EditEmployeeInfo extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
                             TextView address = (TextView) findViewById(R.id.postalAddressId2);
                             address.setText(snapshot.child("address").getValue().toString());
 
                             TextView phone = (TextView) findViewById(R.id.phoneId2);
                             phone.setText(snapshot.child("phone").getValue().toString());
+
                         }
 
                         @Override
