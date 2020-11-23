@@ -143,7 +143,8 @@ public class Signup extends AppCompatActivity {
                                     newUserPasswordRef.setValue(password);
                                     newUserAccountTypeRef.setValue(accountType);
                                     */
-
+                                    setContentView(R.layout.activity_signup);
+                                    Toast.makeText(getApplicationContext(),"Sign up Success!",Toast.LENGTH_LONG).show();
                                     Intent loginIntent = new Intent(Signup.this, Login.class);
 
                                     startActivity(loginIntent);
