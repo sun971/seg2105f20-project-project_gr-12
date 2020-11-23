@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditEmployeeInfo"></activity>
+        <activity android:name=".EditBranchHours"></activity>
+        <activity android:name=".EditEmployeeInfo" />
         <activity android:name=".SetEmployeeInfo" />
-        <activity android:name=".EmployeeServiceRequests"></activity>
+        <activity android:name=".EmployeeServiceRequests" />
         <activity android:name=".ViewRequest" />
         <activity android:name=".DeleteAccount" />
         <activity android:name=".Login">
@@ -27,10 +28,9 @@
         <activity android:name=".AdminWelcome" />
         <activity android:name=".CurrentService" />
         <activity android:name=".CreateNewServices" />
-        <activity android:name=".AddBranchService"></activity>
+        <activity android:name=".AddBranchService" />
         <activity android:name=".CurrentBranchServices" />
         <activity android:name=".EmployeeWelcome" />
-
     </application>
 
 </manifest>
