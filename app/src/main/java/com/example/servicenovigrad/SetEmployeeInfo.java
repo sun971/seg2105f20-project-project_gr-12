@@ -73,7 +73,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
                                 //dbUserReference.child("address").setValue(address);
                                 Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
 
-                                Intent intent = new Intent(SetEmployeeInfo.this, WelcomePage.class);
+                                Intent intent = new Intent(SetEmployeeInfo.this, EmployeeWelcome.class);
                                 startActivity(intent);
 
 

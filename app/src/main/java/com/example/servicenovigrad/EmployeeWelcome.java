@@ -77,6 +77,8 @@ public class EmployeeWelcome extends AppCompatActivity {
     }
 
     public void EditHours(View view) {
+        Intent intent = new Intent(this, EditBranchHours.class);
+        startActivity(intent);
     }
 
     public void deleteAccounts(View view) {
