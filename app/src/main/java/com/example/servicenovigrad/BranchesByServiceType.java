@@ -56,8 +56,8 @@ public class BranchesByServiceType extends AppCompatActivity {
     }
 
     private void BranchChosen(String branch){
-        Intent intent = new Intent(this, BranchesByServiceType.class);
-        intent.putExtra("serviceName", branch);
+        Intent intent = new Intent(this, ServicesOfGivenBranch.class);
+        intent.putExtra("branchName", branch);
         startActivity(intent);
     }
 
