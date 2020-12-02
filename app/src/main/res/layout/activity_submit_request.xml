@@ -22,70 +22,112 @@
             android:id="@+id/firstNameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/firstName" />
+            android:text="Enter First Name:" />
+
+        <EditText
+            android:id="@+id/firstNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="First Name"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/lastNameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lastName" />
+            android:text="Enter Last Name:" />
+
+        <EditText
+            android:id="@+id/lastNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Last Name"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/addressTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/requestAddress" />
+            android:text="Enter Address:" />
+
+        <EditText
+            android:id="@+id/addressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPostalAddress"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/dobTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dob" />
+            android:text="Enter Date of Birth:" />
+
+        <EditText
+            android:id="@+id/dobEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="YYYY MM DD"
+            android:inputType="date"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/licenseTypeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/licenseType" />
+            android:text="Enter License Type" />
+
+        <Spinner
+            android:id="@+id/licenseTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
 
         <TextView
             android:id="@+id/proofOfResidenceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Proof of Residence" />
+            android:text="Upload Photo Proof of Residence" />
 
-        <ImageView
-            android:id="@+id/proofOfResidenceImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/uploadProofOfResidence"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="UploadPhoto"
+            android:text="Select a Photo" />
 
         <TextView
             android:id="@+id/customerPhotoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer Photo" />
+            android:text="Upload Headshot Photo" />
 
-        <ImageView
-            android:id="@+id/customerPhotoImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/uploadCustomerPhoto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="UploadPhoto"
+            android:text="Select a Photo" />
 
         <TextView
             android:id="@+id/proofOfStatusTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Proof of Status" />
+            android:text="Upload Photo Proof of Status" />
 
-        <ImageView
-            android:id="@+id/proofOfStatusImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/uploadProofOfStatus"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="UploadPhoto"
+            android:text="Select a Photo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +135,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/rejectRequestButton"
+                android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,13 +143,12 @@
                 android:text="Back" />
 
             <Button
-                android:id="@+id/acceptRequestButton"
+                android:id="@+id/submitButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="Submit"
                 android:text="Submit" />
-
         </LinearLayout>
 
     </LinearLayout>
