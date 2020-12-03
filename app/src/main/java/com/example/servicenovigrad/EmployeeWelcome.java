@@ -72,7 +72,7 @@ public class EmployeeWelcome extends AppCompatActivity {
     }
 
     public void EditAddress(View view) {
-        Intent intent = new Intent(this, SetEmployeeInfo.class);
+        Intent intent = new Intent(this, EditEmployeeInfo.class);
         startActivity(intent);
     }
 
