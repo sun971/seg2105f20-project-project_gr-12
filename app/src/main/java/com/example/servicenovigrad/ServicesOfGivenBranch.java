@@ -119,7 +119,7 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
     }
 
     public void WelcomePage(View view) {
-        Intent intent = new Intent(this, CustomerWelcomePage.class);
+        Intent intent = new Intent(this, WelcomePage.class);
         startActivity(intent);
     }
 }

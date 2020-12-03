@@ -198,7 +198,7 @@ public class SubmitRequest extends AppCompatActivity {
     }
 
     public void Back(View view) {
-        Intent intent = new Intent(this, CustomerWelcomePage.class);
+        Intent intent = new Intent(this, WelcomePage.class);
         startActivity(intent);
     }
 
@@ -208,9 +208,9 @@ public class SubmitRequest extends AppCompatActivity {
         String address;
         String dob;
         LicenseType licenseType;
-        String customerPhotoPath;
-        String proofOfResidencePath;
-        String proofOfStatusPath;
+        String customerPhotoPath = null;
+        String proofOfResidencePath = null;
+        String proofOfStatusPath = null;
 
 
         firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
