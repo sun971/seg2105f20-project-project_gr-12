@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +48,7 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
         TextView branchNameView = findViewById(R.id.branchNameText);
         branchNameView.setText(branchName);
 
+
         db = FirebaseDatabase.getInstance();
         servicesList = new ArrayList<String>();
         databaseUsers = db.getReference("users");
@@ -55,25 +58,11 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
         branchFirst = seperatedBranchName[0];
         branchLast = seperatedBranchName[1];
 
-        databaseUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
-                        String childFirst = postSnapshot.child("firstName").getValue().toString();
-                        String childLast = postSnapshot.child("lastName").getValue().toString();
-                        if (branchFirst.equals(childFirst) && branchLast.equals(childLast)) {
-                            branchID = postSnapshot.child("uid").getValue().toString();
-                        }
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        Log.d("test","Branch first: " + branchFirst);
+        Log.d("test","Branch last: " + branchLast);
+        Log.d("test","Branch ID: " + branchID);
+        Log.d("test","Updating?");
 
         listOfServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,27 +84,46 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //Finds all the current services in the database and displays them in list view
-        databaseUsers.child(branchID).addValueEventListener(new ValueEventListener() {
+        databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+                Log.d("test","Accessed users");
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Log.d("test","New User");
+                    if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
+                        String childFirst = postSnapshot.child("firstName").getValue().toString();
+                        String childLast = postSnapshot.child("lastName").getValue().toString();
 
-                servicesList = snapshot.child("branchServices").getValue(t);
+                        Log.d("test","child first: " + childFirst);
+                        Log.d("test","child last: " + childLast);
+                        Log.d("test","Branch ID: " + branchID);
 
-                if (servicesList != null) {
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ServicesOfGivenBranch.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
-                    listOfServices.setAdapter(arrayAdapter);
-                }else{
-                    servicesList = new ArrayList<>();
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ServicesOfGivenBranch.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
-                    listOfServices.setAdapter(arrayAdapter);
+                        if (branchFirst.equals(childFirst) && branchLast.equals(childLast)) {
+                            branchID = postSnapshot.child("uid").getValue().toString();
+                            GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+
+                            servicesList = postSnapshot.child("branchServices").getValue(t);
+
+                            if (servicesList != null) {
+                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ServicesOfGivenBranch.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
+                                listOfServices.setAdapter(arrayAdapter);
+                            }else{
+                                servicesList = new ArrayList<>();
+                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ServicesOfGivenBranch.this, R.layout.layout_services_list, R.id.textViewName, servicesList);
+                                listOfServices.setAdapter(arrayAdapter);
+                            }
+                        }
+                    }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("test", "CANCELLED");
+
             }
         });
+
     }
 
     public void WelcomePage(View view) {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -73,6 +74,9 @@ public class SubmitRequest extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_submit_request);
+
         firstNameTitleView = (TextView) findViewById(R.id.firstNameTitle);
         lastNameTitleView = (TextView) findViewById(R.id.lastNameTitle);
         addressTitleView = (TextView) findViewById(R.id.addressTitle);
@@ -84,9 +88,11 @@ public class SubmitRequest extends AppCompatActivity {
         residenceButton = (Button) findViewById(R.id.uploadProofOfResidence);
         statusButton = (Button) findViewById(R.id.uploadProofOfStatus);
         photoButton = (Button) findViewById(R.id.uploadCustomerPhoto);
+        firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
+        lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
+        addressEditText = (EditText) findViewById(R.id.addressEditText);
+        dobEditText = (EditText) findViewById(R.id.dobEditText);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submit_request);
 
         //gets the service name passed from previous activity
         Bundle bundle = getIntent().getExtras();
@@ -124,48 +130,72 @@ public class SubmitRequest extends AppCompatActivity {
                     if (!firstNameRequired) {
                         firstNameTitleView.setVisibility(View.GONE);
                         firstNameEditText.setVisibility(View.GONE);
+                    } else {
+                        firstNameTitleView.setVisibility(View.VISIBLE);
+                        firstNameEditText.setVisibility(View.VISIBLE);
                     }
                 }
                 if (lastNameRequired != null) {
                     if (!lastNameRequired) {
                         lastNameTitleView.setVisibility(View.GONE);
                         lastNameEditText.setVisibility(View.GONE);
+                    }else {
+                        lastNameTitleView.setVisibility(View.VISIBLE);
+                        lastNameEditText.setVisibility(View.VISIBLE);
                     }
                 }
                 if (addressRequired != null) {
                     if (!addressRequired) {
                         addressTitleView.setVisibility(View.GONE);
                         addressEditText.setVisibility(View.GONE);
+                    }else {
+                        addressTitleView.setVisibility(View.VISIBLE);
+                        addressEditText.setVisibility(View.VISIBLE);
                     }
                 }
                 if (dobFieldRequired != null) {
                     if (!dobFieldRequired) {
                         dobTitleView.setVisibility(View.GONE);
                         dobEditText.setVisibility(View.GONE);
+                    }else {
+                        dobTitleView.setVisibility(View.VISIBLE);
+                        dobEditText.setVisibility(View.VISIBLE);
                     }
                 }
                 if (licenseTypeRequired != null) {
                     if (!licenseTypeRequired) {
                         licenseTypeTitleView.setVisibility(View.GONE);
                         licenseSpinner.setVisibility(View.GONE);
+                    }else {
+                        licenseTypeTitleView.setVisibility(View.VISIBLE);
+                        licenseSpinner.setVisibility(View.VISIBLE);
                     }
                 }
                 if (photoRequired != null) {
                     if (!photoRequired) {
                         customerPhotoTitleView.setVisibility(View.GONE);
                         photoButton.setVisibility(View.GONE);
+                    }else {
+                        customerPhotoTitleView.setVisibility(View.VISIBLE);
+                        photoButton.setVisibility(View.VISIBLE);
                     }
                 }
                 if (residenceRequired != null) {
                     if (!residenceRequired) {
                         proofOfResidenceTitleView.setVisibility(View.GONE);
                         residenceButton.setVisibility(View.GONE);
+                    }else {
+                        proofOfResidenceTitleView.setVisibility(View.VISIBLE);
+                        residenceButton.setVisibility(View.VISIBLE);
                     }
                 }
                 if (statusRequired != null) {
                     if (!statusRequired) {
                         proofOfStatusTitleView.setVisibility(View.GONE);
                         statusButton.setVisibility(View.GONE);
+                    }else {
+                        proofOfStatusTitleView.setVisibility(View.VISIBLE);
+                        statusButton.setVisibility(View.VISIBLE);
                     }
                 }
 
