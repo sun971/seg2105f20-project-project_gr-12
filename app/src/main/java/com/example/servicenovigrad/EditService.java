@@ -52,6 +52,8 @@ public class EditService extends AppCompatActivity {
         serviceTextView.setText(serviceName);
     }
 
+
+
     public void onClickDone2(View view) {
 
         priceValid = true;
@@ -94,6 +96,8 @@ public class EditService extends AppCompatActivity {
         if(priceField.equals("")) {
             setContentView(R.layout.activity_edit_service);
             Toast.makeText(getApplicationContext(),"Please Enter a Price",Toast.LENGTH_LONG).show();
+            TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+            serviceTextView.setText(serviceName);
         }
         else    {
             //select at least one doc or form option
@@ -149,29 +153,38 @@ public class EditService extends AppCompatActivity {
             if((firstname==false && lastname==false && address==false && dob==false && license==false) && (status==false && photoID==false && resident==false)){
                 setContentView(R.layout.activity_edit_service);
                 Toast.makeText(getApplicationContext(),"Document and Form Info Not Specified",Toast.LENGTH_LONG).show();
+                TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+                serviceTextView.setText(serviceName);
             }
             //nothing in forms selected
             else if (firstname==false && lastname==false && address==false && dob==false && license==false)   {
                 setContentView(R.layout.activity_edit_service);
                 Toast.makeText(getApplicationContext(),"Select at least one Form Info",Toast.LENGTH_LONG).show();
+                TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+                serviceTextView.setText(serviceName);
 
             }
             //nothing in documents selected
             else if (status==false && photoID==false && resident==false)  {
                 setContentView(R.layout.activity_edit_service);
                 Toast.makeText(getApplicationContext(),"Select at least one Document Info",Toast.LENGTH_LONG).show();
+                TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+                serviceTextView.setText(serviceName);
 
             }
             //Make sure not only address or dob field is checked
             else if(firstname == false && lastname == false && (address == true || dob == true || license==true))  {
                 setContentView(R.layout.activity_edit_service);
                 Toast.makeText(getApplicationContext(),"Select at least one name field",Toast.LENGTH_LONG).show();
-
+                TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+                serviceTextView.setText(serviceName);
             }
             //Makes sure the price is in correct format
             else if(!priceValid){
                 setContentView(R.layout.activity_edit_service);
                 Toast.makeText(getApplicationContext(),"Maximum Two Decimals for Price",Toast.LENGTH_LONG).show();
+                TextView serviceTextView = (TextView) findViewById(R.id.serviceNameText);
+                serviceTextView.setText(serviceName);
             }
         }
 
