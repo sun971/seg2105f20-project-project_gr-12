@@ -61,7 +61,7 @@ public class SetEmployeeInfo extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(SetEmployeeInfo.this, EmployeeWelcome.class);
+                Intent intent = new Intent(SetEmployeeInfo.this, EditBranchHours.class);
                 startActivity(intent);
 
                 /*

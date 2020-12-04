@@ -129,18 +129,18 @@ public class Login extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString());
 
-                                                boolean hasAddress = true;
-                                                if ((snapshot.child("address").getValue()) ==null){
-                                                    hasAddress=  false;
+                                                boolean hasAddressOrPhone = true;
+                                                if ((snapshot.child("address").getValue()) ==null || (snapshot.child("phone").getValue()) == null){
+                                                    hasAddressOrPhone=  false;
                                                 }
-
+                                                
 
                                                 //need to add in checks to make sure the employee number is checked
-                                                if((snapshot.child("accountType").getValue()).equals("employee") && hasAddress){
+                                                if((snapshot.child("accountType").getValue()).equals("employee") && hasAddressOrPhone){
                                                     Intent redirectToWelcome = new Intent(Login.this, EmployeeWelcome.class);
                                                     startActivity(redirectToWelcome);
 
-                                                }else if ((snapshot.child("accountType").getValue()).equals("employee") && !(hasAddress)){
+                                                }else if ((snapshot.child("accountType").getValue()).equals("employee") && !(hasAddressOrPhone)){
                                                     Intent redirectToSetInfo = new Intent(Login.this, SetEmployeeInfo.class);
                                                     startActivity(redirectToSetInfo);
 
