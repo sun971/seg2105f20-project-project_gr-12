@@ -89,6 +89,28 @@ public class WelcomePage extends AppCompatActivity {
     }
 
 
+    public void searchAddress(View view) {
+        if (view.getId() == R.id.btnsearchAddress) {
+            //need to change class to searchAddress
+            Intent intent = new Intent(this, SearchByAddress.class);
+            startActivity(intent);
 
+        }
+    }
 
+    public void searchWorkingHours(View view) {
+        if (view.getId() == R.id.btnsearchWorkingHours) {
+            Intent intent = new Intent(this, SearchByWorkingHours.class);
+            startActivity(intent);
+
+        }
+    }
+
+    public void searchTypeOfServices(View view) {
+        if (view.getId() == R.id.btntypeOfServices) {
+            Intent intent = new Intent(this, SearchByService.class);
+            startActivity(intent);
+
+        }
+    }
 }
