@@ -33,21 +33,6 @@ public class WelcomePage extends AppCompatActivity {
         getCurrentUser();
     }
 
-    public void onStart()   {
-        super.onStart();
-
-        boolean loggedIn = false;
-
-        //Check and redirect to login
-        if(loggedIn == false)
-        {
-            Log.d("Msg","No one signed in");
-
-
-        }
-
-    }
-
     public void onClick(View v) {
         if (v.getId() == R.id.btnSignOut) {
             session.signOut();
