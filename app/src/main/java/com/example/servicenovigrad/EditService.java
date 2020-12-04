@@ -77,14 +77,12 @@ public class EditService extends AppCompatActivity {
         resident = residentCheckBox.isChecked();
         license = licenseCheckBox.isChecked();
 
-        // make sure the Name of Service and price is filled in
+        // make sure the price is filled in
 
         EditText checkPrice = (EditText) findViewById(R.id.servicePrice2);
 
 
         String priceField = checkPrice.getText().toString();
-
-        //takes away all spaces. tabs from the Service Name field
 
 
         //checks if the price has no more than 2 decimals
