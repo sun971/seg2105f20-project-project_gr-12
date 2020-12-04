@@ -287,7 +287,7 @@ public class ViewRequest extends AppCompatActivity {
     }
 
     private void goBack() {
-        Intent intent = new Intent(this, EmployeeServiceRequests.class);
+        Intent intent = new Intent(ViewRequest.this, EmployeeServiceRequests.class);
         startActivity(intent);
     }
 }

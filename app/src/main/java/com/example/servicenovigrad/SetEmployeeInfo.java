@@ -53,6 +53,18 @@ public class SetEmployeeInfo extends AppCompatActivity {
             FirebaseUser user = session.getCurrentUser();
             if (user != null) {
                 final String id = user.getUid();
+
+                DatabaseReference userAddressReference = mDatabase.getReference("users/" + id + "/address");
+                DatabaseReference userPhoneReference = mDatabase.getReference("users/" + id + "/phone");
+                userAddressReference.setValue(address);
+                userPhoneReference.setValue(phone);
+
+                Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(SetEmployeeInfo.this, EmployeeWelcome.class);
+                startActivity(intent);
+
+                /*
                 DatabaseReference userData = mDatabase.getReference("users/"+id);
 
                 userData.addListenerForSingleValueEvent(
@@ -82,15 +94,14 @@ public class SetEmployeeInfo extends AppCompatActivity {
                         }
 
                 );
+                */
 
+            } else {
+                Intent nextIntent = new Intent(SetEmployeeInfo.this, Login.class);
+
+                startActivity(nextIntent);
 
             }
-
-
-            Intent nextIntent = new Intent(SetEmployeeInfo.this, Login.class);
-
-            startActivity(nextIntent);
-
 
         }
     }
