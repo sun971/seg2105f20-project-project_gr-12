@@ -86,7 +86,77 @@ public class EditBranchHours extends AppCompatActivity {
         autocomplete6.setAdapter(adapter);
         autocomplete7.setThreshold(2);
         autocomplete7.setAdapter(adapter);
+
+
+        // Check and populate fields if existing branch hours in database
+        FirebaseUser user = session.getCurrentUser();
+        final String id = user.getUid();
+        DatabaseReference getHours = mDatabase.getReference("users/" + id);
+        getHours.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild("monday") && snapshot.hasChild("tuesday") && snapshot.hasChild("wednesday")
+                && snapshot.hasChild("thursday") && snapshot.hasChild("friday") && snapshot.hasChild("saturday") && snapshot.hasChild("sunday")) {
+
+                    // Populate fields with existing values
+
+                    EditText mondayStart = (EditText) findViewById(R.id.autoCompMonStart);
+                    mondayStart.setText(snapshot.child("monday").getValue().toString());
+
+                    EditText TuesStart = (EditText) findViewById(R.id.autoCompTueStart);
+                    TuesStart.setText(snapshot.child("tuesday").getValue().toString());
+
+                    EditText WednStart = (EditText) findViewById(R.id.autoCompWedStart);
+                    WednStart.setText(snapshot.child("wednesday").getValue().toString());
+
+                    EditText ThursStart = (EditText) findViewById(R.id.autoCompThursStart);
+                    ThursStart.setText(snapshot.child("thursday").getValue().toString());
+
+                    EditText FriStart = (EditText) findViewById(R.id.autoCompFriStart);
+                    FriStart.setText(snapshot.child("friday").getValue().toString());
+
+                    EditText SatStart = (EditText) findViewById(R.id.autoCompSatStart);
+                    SatStart.setText(snapshot.child("saturday").getValue().toString());
+
+                    EditText SunStart = (EditText) findViewById(R.id.autoCompSunStart);
+                    SunStart.setText(snapshot.child("sunday").getValue().toString());
+                }
+                else    {
+                    // Populate fields with default values
+
+                    EditText mondayStart = (EditText) findViewById(R.id.autoCompMonStart);
+                    mondayStart.setText("10:00am - 8:00pm");
+
+                    EditText TuesStart = (EditText) findViewById(R.id.autoCompTueStart);
+                    TuesStart.setText("10:00am - 8:00pm");
+
+                    EditText WednStart = (EditText) findViewById(R.id.autoCompWedStart);
+                    WednStart.setText("10:00am - 8:00pm");
+
+                    EditText ThursStart = (EditText) findViewById(R.id.autoCompThursStart);
+                    ThursStart.setText("10:00am - 8:00pm");
+
+                    EditText FriStart = (EditText) findViewById(R.id.autoCompFriStart);
+                    FriStart.setText("10:00am - 8:00pm");
+
+                    EditText SatStart = (EditText) findViewById(R.id.autoCompSatStart);
+                    SatStart.setText("10:00am - 8:00pm");
+
+                    EditText SunStart = (EditText) findViewById(R.id.autoCompSunStart);
+                    SunStart.setText("10:00am - 8:00pm");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
+
+
 
     public void clickSubmit(View view) {
 
@@ -96,19 +166,19 @@ public class EditBranchHours extends AppCompatActivity {
         EditText TuesStart = (EditText) findViewById(R.id.autoCompTueStart);
         final String tues = TuesStart.getText().toString();
 
-        EditText WednStart = (EditText) findViewById(R.id.autoCompTueStart);
+        EditText WednStart = (EditText) findViewById(R.id.autoCompWedStart);
         final String wed = WednStart.getText().toString();
 
-        EditText ThursStart = (EditText) findViewById(R.id.autoCompTueStart);
+        EditText ThursStart = (EditText) findViewById(R.id.autoCompThursStart);
         final String thurs = ThursStart.getText().toString();
 
-        EditText FriStart = (EditText) findViewById(R.id.autoCompTueStart);
+        EditText FriStart = (EditText) findViewById(R.id.autoCompFriStart);
         final String friday = FriStart.getText().toString();
 
-        EditText SatStart = (EditText) findViewById(R.id.autoCompTueStart);
+        EditText SatStart = (EditText) findViewById(R.id.autoCompSatStart);
         final String saturday = SatStart.getText().toString();
 
-        EditText SunStart = (EditText) findViewById(R.id.autoCompTueStart);
+        EditText SunStart = (EditText) findViewById(R.id.autoCompSunStart);
         final String sunday = SunStart.getText().toString();
 
 
@@ -117,32 +187,28 @@ public class EditBranchHours extends AppCompatActivity {
             setContentView(R.layout.activity_edit_branch_hours);
             Toast.makeText(getApplicationContext(), "All fields require a value", Toast.LENGTH_LONG).show();
         } else {
+
+            // Check branch hours are valid formatting
+
+
+
             FirebaseUser user = session.getCurrentUser();
             if (user != null) {
                 final String id = user.getUid();
                 DatabaseReference userData = mDatabase.getReference("users/" + id);
 
-                userData.addListenerForSingleValueEvent(
+                userData.child("monday").setValue(monday);
+                userData.child("tuesday").setValue(tues);
+                userData.child("wednesday").setValue(wed);
+                userData.child("thursday").setValue(thurs);
+                userData.child("friday").setValue(friday);
+                userData.child("saturday").setValue(saturday);
+                userData.child("sunday").setValue(sunday);
+
+                userData.addValueEventListener(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                //EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), address, phone);
-                                //emp.setAddress(address);
-                                //emp.setPhone(phone);
-                                //Toast.makeText(getApplicationContext(), "address is:" +emp.getAddress(), Toast.LENGTH_LONG).show();
-
-
-                                DatabaseReference addPhone = mDatabase.getReference("users/" + id);
-                                EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString(), monday, tues, wed,
-                                        thurs, friday, saturday, sunday);
-                                addPhone.setValue(emp);
-                                emp.setMonday(monday);
-                                emp.setTuesday(tues);
-                                emp.setWednesday(wed);
-                                emp.setThursday(thurs);
-                                emp.setFriday(friday);
-                                emp.setSaturday(saturday);
-                                emp.setSunday(sunday);
 
                                 Toast.makeText(getApplicationContext(), "Updating Branch Hours", Toast.LENGTH_LONG).show();
 
@@ -153,17 +219,14 @@ public class EditBranchHours extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            public void onCancelled (@NonNull DatabaseError error){
 
                             }
                         }
 
+
                 );
-
-
             }
-
-
         }
     }
 }
