@@ -131,4 +131,9 @@ public class CurrentService extends AppCompatActivity {
         Intent intent = new Intent(this, CreateNewServices.class);
         startActivity(intent);
     }
+
+    public void backToAdmin(View view) {
+        Intent intent = new Intent(this, AdminWelcome.class);
+        startActivity(intent);
+    }
 }
