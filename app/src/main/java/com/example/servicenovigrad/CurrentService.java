@@ -112,8 +112,8 @@ public class CurrentService extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteService(serviceName);
-                Intent intent = new Intent(CurrentService.this, CreateNewServices.class);
+                Intent intent = new Intent(CurrentService.this, EditService.class);
+                intent.putExtra("serviceName", serviceName);
                 startActivity(intent);
             }
         });

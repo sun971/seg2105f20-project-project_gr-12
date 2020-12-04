@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewServices">
-
+    tools:context=".EditService">
 
     <CheckBox
-        android:id="@+id/rbtnlastName"
+        android:id="@+id/rbtnlastName2"
         android:layout_width="335dp"
         android:layout_height="45dp"
         android:layout_marginStart="38dp"
@@ -19,7 +18,7 @@
         app:layout_constraintVertical_bias="0.32" />
 
     <CheckBox
-        android:id="@+id/cbtnFirstName"
+        android:id="@+id/cbtnFirstName2"
         android:layout_width="335dp"
         android:layout_height="39dp"
         android:text="First name"
@@ -30,7 +29,7 @@
         app:layout_constraintVertical_bias="0.261" />
 
     <CheckBox
-        android:id="@+id/cbtnRes"
+        android:id="@+id/cbtnRes2"
         android:layout_width="345dp"
         android:layout_height="38dp"
         android:text="Proof of Resident"
@@ -42,7 +41,7 @@
         app:layout_constraintVertical_bias="0.606" />
 
     <TextView
-        android:id="@+id/formType"
+        android:id="@+id/formType2"
         android:layout_width="141dp"
         android:layout_height="28dp"
         android:text="Document Info:"
@@ -55,7 +54,7 @@
         app:layout_constraintVertical_bias="0.557" />
 
     <CheckBox
-        android:id="@+id/cbtnPhoto"
+        android:id="@+id/cbtnPhoto2"
         android:layout_width="349dp"
         android:layout_height="35dp"
         android:text="Photo of Customer"
@@ -67,7 +66,7 @@
         app:layout_constraintVertical_bias="0.716" />
 
     <CheckBox
-        android:id="@+id/cbtnStatus"
+        android:id="@+id/cbtnStatus2"
         android:layout_width="349dp"
         android:layout_height="40dp"
         android:text="Proof of Status"
@@ -79,7 +78,7 @@
         app:layout_constraintVertical_bias="0.662" />
 
     <CheckBox
-        android:id="@+id/cbtnLicense"
+        android:id="@+id/cbtnLicense2"
         android:layout_width="349dp"
         android:layout_height="35dp"
         android:text="License Type"
@@ -91,7 +90,7 @@
         app:layout_constraintVertical_bias="0.501" />
 
     <EditText
-        android:id="@+id/servicePrice"
+        android:id="@+id/servicePrice2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -105,22 +104,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.877" />
 
-    <EditText
-        android:id="@+id/serviceName"
-        android:layout_width="252dp"
-        android:layout_height="42dp"
-        android:ems="10"
-        android:hint="Enter Name of Service"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
-
     <CheckBox
-        android:id="@+id/rbtnDob"
+        android:id="@+id/rbtnDob2"
         android:layout_width="335dp"
         android:layout_height="39dp"
         android:text="Date of Birth"
@@ -131,7 +116,7 @@
         app:layout_constraintVertical_bias="0.447" />
 
     <TextView
-        android:id="@+id/docType"
+        android:id="@+id/docType2"
         android:layout_width="323dp"
         android:layout_height="22dp"
         android:text="Form Info:"
@@ -144,7 +129,7 @@
         app:layout_constraintVertical_bias="0.21" />
 
     <CheckBox
-        android:id="@+id/rbtnaddress"
+        android:id="@+id/rbtnaddress2"
         android:layout_width="335dp"
         android:layout_height="45dp"
         android:text="Address"
@@ -155,20 +140,20 @@
         app:layout_constraintVertical_bias="0.386" />
 
     <TextView
-        android:id="@+id/createService"
+        android:id="@+id/createService2"
         android:layout_width="325dp"
-        android:layout_height="90dp"
-        android:text="Create Service"
+        android:layout_height="50dp"
+        android:text="Edit Service"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintVertical_bias="0.046" />
 
     <TextView
-        android:id="@+id/enterPrice"
+        android:id="@+id/enterPrice2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -181,7 +166,7 @@
         app:layout_constraintVertical_bias="0.772" />
 
     <Button
-        android:id="@+id/btnCreateAccount"
+        android:id="@+id/btnCreateAccount2"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:background="@drawable/round_button"
@@ -197,12 +182,12 @@
         app:layout_constraintVertical_bias="0.957" />
 
     <Button
-        android:id="@+id/btnbackAdminPage"
+        android:id="@+id/btnbackAdminPage2"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:background="@drawable/round_button"
-        android:onClick="onClickWelomePage"
-        android:text="Welcome Page"
+        android:onClick="onClickCancel"
+        android:text="Cancel"
         android:textColor="#F1EFF4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -211,6 +196,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.979" />
 
-
-
+    <TextView
+        android:id="@+id/serviceNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="9dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createService2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
