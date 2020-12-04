@@ -205,27 +205,11 @@ public class EditBranchHours extends AppCompatActivity {
                 userData.child("saturday").setValue(saturday);
                 userData.child("sunday").setValue(sunday);
 
-                userData.addValueEventListener(
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(getApplicationContext(), "Updating Branch Hours", Toast.LENGTH_LONG).show();
 
-                                Toast.makeText(getApplicationContext(), "Updating Branch Hours", Toast.LENGTH_LONG).show();
+                Intent redirect = new Intent(EditBranchHours.this, EmployeeWelcome.class);
+                startActivity(redirect);
 
-                                Intent redirect = new Intent(EditBranchHours.this, EmployeeWelcome.class);
-                                startActivity(redirect);
-
-
-                            }
-
-                            @Override
-                            public void onCancelled (@NonNull DatabaseError error){
-
-                            }
-                        }
-
-
-                );
             }
         }
     }
