@@ -82,7 +82,7 @@ public class HelperClass {
         return customerAccount;
 
     }
-
+/*
     public void addServiceRequestsToAccount(String uid) {
 
 
@@ -111,5 +111,7 @@ public class HelperClass {
 
     }
 
+
+ */
 
 }

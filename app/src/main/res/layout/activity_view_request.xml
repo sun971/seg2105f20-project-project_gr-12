@@ -55,12 +55,12 @@
             android:layout_height="wrap_content"
             android:text="Proof of Residence" />
 
-        <ImageView
-            android:id="@+id/proofOfResidenceImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/proofOfResidenceButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="DownloadResidence"
+            android:text="Download Photo" />
 
         <TextView
             android:id="@+id/customerPhotoTitle"
@@ -68,12 +68,12 @@
             android:layout_height="wrap_content"
             android:text="Customer Photo" />
 
-        <ImageView
-            android:id="@+id/customerPhotoImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/customerPhotoButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="DownloadPhoto"
+            android:text="Download Photo" />
 
         <TextView
             android:id="@+id/proofOfStatusTitle"
@@ -81,12 +81,12 @@
             android:layout_height="wrap_content"
             android:text="Proof of Status" />
 
-        <ImageView
-            android:id="@+id/proofOfStatusImage"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/proofOfStatusButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:onClick="DownloadStatus"
+            android:text="Download Photo" />
 
         <LinearLayout
             android:layout_width="match_parent"
