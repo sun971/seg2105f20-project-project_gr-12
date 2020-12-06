@@ -17,6 +17,7 @@
     <string name="dob">Error Loading Date of Birth</string>
     <string name="licenseType">Error Loading License Type</string>
     <string name="requestAddress">Error Loading Address</string>
+    <string name="chooseBranch">Choose Preferred Branch</string>
     <string-array name="licenseTypes">
         <item> </item>
         <item>G1</item>
