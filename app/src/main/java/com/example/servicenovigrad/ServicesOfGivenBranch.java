@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,31 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
+
+        // Retrieve average rating
+        final RatingBar branchAverageRating = (RatingBar)findViewById(R.id.ratingBar4);
+        DatabaseReference getRating = db.getReference("users/"+branchID);
+        getRating.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.hasChild("ratings"))  {
+                    branchAverageRating.setRating((float) 5.00);
+                }
+                else    {
+                    branchAverageRating.setRating((float) 0);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("test", "CANCELLED");
+
+            }
+        });
+
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,6 +154,12 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
 
     public void WelcomePage(View view) {
         Intent intent = new Intent(this, WelcomePage.class);
+        startActivity(intent);
+    }
+
+    public void goToRateBranchPage(View view)    {
+        Intent intent = new Intent(this, RateBranch.class);
+        intent.putExtra("branchID", branchID);
         startActivity(intent);
     }
 }
