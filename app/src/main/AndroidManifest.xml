@@ -20,6 +20,7 @@
         <activity android:name=".SearchByService" />
         <activity android:name=".SearchByAddress" />
         <activity android:name=".SearchByWorkingHours" />
+        <activity android:name="ListHoursGivenDate"/>
         <activity android:name=".EditBranchHours" />
         <activity android:name=".EditEmployeeInfo" />
         <activity android:name=".SetEmployeeInfo" />
