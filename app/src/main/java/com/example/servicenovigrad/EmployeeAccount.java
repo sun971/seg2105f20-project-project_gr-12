@@ -26,10 +26,6 @@ public class EmployeeAccount extends Account {
 
         serviceRequests = new ArrayList<ServiceRequest>();
         branchServices = new ArrayList<String>();
-
-
-        serviceRequests.add(new ServiceRequest("Marshall", "Steele", "myAddress", "12/22/1997", LicenseType.G2, "asd", "asd", "asd"));
-        serviceRequests.add(new ServiceRequest("Bon", "Jovi", "myAddress2", "3/2/1962", LicenseType.G2, "asd", "asd", "asd"));
     }
     EmployeeAccount(String uid, String firstName, String lastName, String eMail, String password, String address, String phone) {
         super(uid, firstName, lastName, eMail, password);

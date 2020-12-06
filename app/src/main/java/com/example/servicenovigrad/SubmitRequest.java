@@ -39,9 +39,9 @@ public class SubmitRequest extends AppCompatActivity {
 
     int resultUploadPhoto = 1;
     Uri photoUri = null;
-    int resultUploadResidence = 1;
+    int resultUploadResidence = 2;
     Uri residenceUri = null;
-    int resultUploadStatus = 1;
+    int resultUploadStatus = 3;
     Uri statusUri = null;
 
     String serviceName;
@@ -295,7 +295,7 @@ public class SubmitRequest extends AppCompatActivity {
             UploadTask uploadTask = photoLocation.putFile(statusUri);
         }
 
-        newRequest = new ServiceRequest(firstName, lastName, address, dob, licenseType, customerPhotoPath, proofOfResidencePath, proofOfStatusPath);
+        newRequest = new ServiceRequest(serviceName, authReference.getCurrentUser().getUid(), firstName, lastName, address, dob, licenseType, customerPhotoPath, proofOfResidencePath, proofOfStatusPath);
 
         DatabaseReference dbRequestsRef = dbReference.child("users").child(branchID).child("serviceRequests");
         if (dbRequestsRef != null) {

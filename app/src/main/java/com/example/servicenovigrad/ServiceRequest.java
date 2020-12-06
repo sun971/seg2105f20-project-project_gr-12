@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class ServiceRequest {
 
+    private String serviceName;
+    private String customerUid;
     private String firstName;
     private String lastName;
     private String address;
@@ -25,7 +27,9 @@ public class ServiceRequest {
     private String proofOfResidenceUid;
     private String proofOfStatusUid;
 
-    ServiceRequest(String firstName, String lastName, String address, String dob, LicenseType licenseType, String customerPhotoUid, String proofOfResidenceUid, String proofOfStatusUid) {
+    ServiceRequest(String serviceName, String customerUid, String firstName, String lastName, String address, String dob, LicenseType licenseType, String customerPhotoUid, String proofOfResidenceUid, String proofOfStatusUid) {
+        this.serviceName = serviceName;
+        this.customerUid = customerUid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -37,6 +41,22 @@ public class ServiceRequest {
     }
 
     ServiceRequest() {}
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setCustomerUid(String customerUid) {
+        this.customerUid = customerUid;
+    }
+
+    public String getCustomerUid() {
+        return customerUid;
+    }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
