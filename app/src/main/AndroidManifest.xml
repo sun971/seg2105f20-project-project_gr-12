@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.servicenovigrad" >
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -11,14 +10,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".RateBranch" >
-        </activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".BranchesByAddress"></activity>
+        <activity android:name=".BranchesByHoursType" />
         <activity android:name=".EditService" />
         <activity android:name=".SubmitRequest" />
         <activity android:name=".ServicesOfGivenBranch" />
         <activity android:name=".BranchesByServiceType" />
         <activity android:name=".SearchByService" />
+        <activity android:name=".SearchByAddress" />
+        <activity android:name=".SearchByWorkingHours" />
+        <activity android:name="ListHoursGivenDate"/>
         <activity android:name=".EditBranchHours" />
         <activity android:name=".EditEmployeeInfo" />
         <activity android:name=".SetEmployeeInfo" />

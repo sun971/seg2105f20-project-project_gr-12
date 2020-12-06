@@ -31,6 +31,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchMonday(View view) {
         if (view.getId() == R.id.btnMonday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "monday");
             startActivity(intent);
         }
     }
@@ -38,6 +39,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchThursday(View view) {
         if (view.getId() == R.id.btnThursday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "thursday");
             startActivity(intent);
         }
     }
@@ -45,6 +47,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchSunday(View view) {
         if (view.getId() == R.id.btnSunday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "sunday");
             startActivity(intent);
         }
     }
@@ -52,6 +55,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchWednesday(View view) {
         if (view.getId() == R.id.btnWednesday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "wednesday");
             startActivity(intent);
 
         }
@@ -60,6 +64,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchFriday(View view) {
         if (view.getId() == R.id.btnFriday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "friday");
             startActivity(intent);
         }
     }
@@ -67,6 +72,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchSaturday(View view) {
         if (view.getId() == R.id.btnSaturday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "saturday");
             startActivity(intent);
         }
     }
@@ -74,6 +80,7 @@ public class SearchByWorkingHours extends AppCompatActivity {
     public void searchTuesday(View view) {
         if (view.getId() == R.id.btnTuesday) {
             Intent intent = new Intent(this, ListHoursGivenDate.class);
+            intent.putExtra("Day", "tuesday");
             startActivity(intent);
         }
     }

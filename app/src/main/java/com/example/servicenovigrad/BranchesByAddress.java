@@ -21,27 +21,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BranchesByServiceType extends AppCompatActivity {
-
+public class BranchesByAddress extends AppCompatActivity {
     ListView listOfBranches;
     DatabaseReference databaseServices;
 
     List<String> branches;
     FirebaseDatabase db;
-    List<String> servicesList;
-    String serviceName;
+    String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_branches_by_address);
+        setContentView(R.layout.activity_branches_by_service_type);
 
-        //gets the service name passed from previous activity
         Bundle bundle = getIntent().getExtras();
-        serviceName = bundle.getString("serviceName");
+        address = bundle.getString("address");
+
+
 
         db = FirebaseDatabase.getInstance();
-        servicesList = new ArrayList<String>();
         databaseServices = db.getReference("users");
         listOfBranches = (ListView) findViewById(R.id.BranchesListView);
         branches = new ArrayList<String>();
@@ -55,6 +53,8 @@ public class BranchesByServiceType extends AppCompatActivity {
         });
     }
 
+
+    //sends to page that displays the services of the selected branch
     private void BranchChosen(String branch){
         Intent intent = new Intent(this, ServicesOfGivenBranch.class);
         intent.putExtra("branchName", branch);
@@ -73,23 +73,14 @@ public class BranchesByServiceType extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
-                        GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
-                        servicesList = postSnapshot.child("branchServices").getValue(t);
-
-                        if (servicesList != null) {
-                            for(int i = 0; i < servicesList.size();i++){
-                                if (servicesList.get(i).equals(serviceName)){
-                                    String branchName = postSnapshot.child("firstName").getValue().toString() + " " + postSnapshot.child("lastName").getValue().toString();
-                                    branches.add(branchName);
-                                    break;
-                                }
-                            }
+                        if (postSnapshot.child("address").getValue().toString().equals(address)){
+                            String branchName = postSnapshot.child("firstName").getValue().toString() + " " + postSnapshot.child("lastName").getValue().toString();
+                            branches.add(branchName);
                         }
                     }
                 }
-                Collections.sort(branches);
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BranchesByServiceType.this, R.layout.layout_services_list, R.id.textViewName, branches);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BranchesByAddress.this, R.layout.layout_services_list, R.id.textViewName, branches);
                 listOfBranches.setAdapter(arrayAdapter);
 
             }
