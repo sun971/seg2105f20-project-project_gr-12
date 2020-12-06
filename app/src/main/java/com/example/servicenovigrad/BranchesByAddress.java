@@ -54,6 +54,7 @@ public class BranchesByAddress extends AppCompatActivity {
     }
 
 
+    //sends to page that displays the services of the selected branch
     private void BranchChosen(String branch){
         Intent intent = new Intent(this, ServicesOfGivenBranch.class);
         intent.putExtra("branchName", branch);
@@ -72,15 +73,12 @@ public class BranchesByAddress extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
-                        //address.getKey();
-                        //EmployeeAccount emp = new EmployeeAccount(id, snapshot.child("firstName").getValue().toString(), snapshot.child("lastName").getValue().toString(), snapshot.child("eMail").getValue().toString(), snapshot.child("password").getValue().toString());
                         if (postSnapshot.child("address").getValue().toString().equals(address)){
                             String branchName = postSnapshot.child("firstName").getValue().toString() + " " + postSnapshot.child("lastName").getValue().toString();
                             branches.add(branchName);
                         }
                     }
                 }
-                //Collections.sort(branches);
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BranchesByAddress.this, R.layout.layout_services_list, R.id.textViewName, branches);
                 listOfBranches.setAdapter(arrayAdapter);

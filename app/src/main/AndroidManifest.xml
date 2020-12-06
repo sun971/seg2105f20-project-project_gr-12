@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".BranchesByAddress"></activity>
+        <activity android:name=".BranchesByHoursType" />
         <activity android:name=".EditService" />
         <activity android:name=".SubmitRequest" />
         <activity android:name=".ServicesOfGivenBranch" />

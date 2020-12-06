@@ -65,16 +65,6 @@ public class SearchByAddress extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 addresses.clear();
-                /*Iterator<DataSnapshot> ads = dataSnapshot.getChildren().iterator();
-
-                addresses.clear();
-
-                while (ads.hasNext()){
-                    DataSnapshot item = ads.next();
-                    String address = item.child("uid").child("address").getValue().toString();
-                    addresses.add(address);
-                }
-                Collections.sort(addresses);*/
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
