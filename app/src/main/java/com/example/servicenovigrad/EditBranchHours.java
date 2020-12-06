@@ -169,10 +169,20 @@ public class EditBranchHours extends AppCompatActivity {
             String rawOpenHours = splitHours[0];
             String rawCloseHours = splitHours[1];
 
+            // Strip punctuation
+
 
 
             String[] openHoursDissected = rawOpenHours.split(":");
             String[] closeHoursDissected = rawCloseHours.split(":");
+
+            if(!(openHoursDissected[0].matches("[0-9]+") && openHoursDissected[1].matches("[0-9]+")))   {
+                return false;
+            }
+
+            if(!(closeHoursDissected[0].matches("[0-9]+") && closeHoursDissected[1].matches("[0-9]+")))   {
+                return false;
+            }
 
             int openHour = Integer.parseInt(openHoursDissected[0]);
             int openMin = Integer.parseInt(openHoursDissected[1]);
@@ -200,7 +210,7 @@ public class EditBranchHours extends AppCompatActivity {
 
         }
         catch(Exception e)	{
-            System.out.println(e.getMessage());
+            return false;
         }
 
         return true;
