@@ -125,25 +125,25 @@ public class EditBranchHours extends AppCompatActivity {
                     // Populate fields with default values
 
                     EditText mondayStart = (EditText) findViewById(R.id.autoCompMonStart);
-                    mondayStart.setText("10:00am - 8:00pm");
+                    mondayStart.setText("10:00 - 20:00");
 
                     EditText TuesStart = (EditText) findViewById(R.id.autoCompTueStart);
-                    TuesStart.setText("10:00am - 8:00pm");
+                    TuesStart.setText("10:00 - 20:00");
 
                     EditText WednStart = (EditText) findViewById(R.id.autoCompWedStart);
-                    WednStart.setText("10:00am - 8:00pm");
+                    WednStart.setText("10:00 - 20:00");
 
                     EditText ThursStart = (EditText) findViewById(R.id.autoCompThursStart);
-                    ThursStart.setText("10:00am - 8:00pm");
+                    ThursStart.setText("10:00 - 20:00");
 
                     EditText FriStart = (EditText) findViewById(R.id.autoCompFriStart);
-                    FriStart.setText("10:00am - 8:00pm");
+                    FriStart.setText("10:00 - 20:00");
 
                     EditText SatStart = (EditText) findViewById(R.id.autoCompSatStart);
-                    SatStart.setText("10:00am - 8:00pm");
+                    SatStart.setText("10:00 - 20:00");
 
                     EditText SunStart = (EditText) findViewById(R.id.autoCompSunStart);
-                    SunStart.setText("10:00am - 8:00pm");
+                    SunStart.setText("10:00 - 20:00");
                 }
             }
 
@@ -156,7 +156,58 @@ public class EditBranchHours extends AppCompatActivity {
 
     }
 
+    public static boolean checkValidFormat(String branchHoursString)   {
 
+        if(branchHoursString.toUpperCase().equals("CLOSED"))	{
+            return true;
+        }
+
+        try	{
+
+            String[] splitHours = branchHoursString.replace(" ", "").split("-");	// Strip spaces, make uppercase, and split into open and closing hours
+
+            String rawOpenHours = splitHours[0];
+            String rawCloseHours = splitHours[1];
+
+
+
+            String[] openHoursDissected = rawOpenHours.split(":");
+            String[] closeHoursDissected = rawCloseHours.split(":");
+
+            int openHour = Integer.parseInt(openHoursDissected[0]);
+            int openMin = Integer.parseInt(openHoursDissected[1]);
+
+            int closeHour = Integer.parseInt(closeHoursDissected[0]);
+            int closeMin = Integer.parseInt(closeHoursDissected[1]);
+
+            // Check if hours are within the 24 hour clock
+
+            if(!(openHour >= 0 && openHour <= 23 && closeHour >= 0 && closeHour <= 23))	{
+                return false;
+            }
+
+            // Check if minutes are within the hour
+
+            if(!(openMin >= 0 && openMin <= 59 && closeMin >= 0 && closeMin <= 49))	{
+                return false;
+            }
+
+            // Check if times are the same
+
+            if(openHour == closeHour && openMin == closeMin)	{
+                return false;
+            }
+
+        }
+        catch(Exception e)	{
+            System.out.println(e.getMessage());
+        }
+
+        return true;
+
+
+
+    }
 
     public void clickSubmit(View view) {
 
@@ -189,28 +240,34 @@ public class EditBranchHours extends AppCompatActivity {
         } else {
 
             // Check branch hours are valid formatting
+            if(checkValidFormat(monday) && checkValidFormat(tues) && checkValidFormat(wed) && checkValidFormat(thurs)
+                    && checkValidFormat(friday) && checkValidFormat(saturday) && checkValidFormat(sunday))  {
 
+                FirebaseUser user = session.getCurrentUser();
+                if (user != null) {
+                    final String id = user.getUid();
+                    DatabaseReference userData = mDatabase.getReference("users/" + id);
 
+                    userData.child("monday").setValue(monday);
+                    userData.child("tuesday").setValue(tues);
+                    userData.child("wednesday").setValue(wed);
+                    userData.child("thursday").setValue(thurs);
+                    userData.child("friday").setValue(friday);
+                    userData.child("saturday").setValue(saturday);
+                    userData.child("sunday").setValue(sunday);
 
-            FirebaseUser user = session.getCurrentUser();
-            if (user != null) {
-                final String id = user.getUid();
-                DatabaseReference userData = mDatabase.getReference("users/" + id);
+                    Toast.makeText(getApplicationContext(), "Updating Branch Hours", Toast.LENGTH_LONG).show();
 
-                userData.child("monday").setValue(monday);
-                userData.child("tuesday").setValue(tues);
-                userData.child("wednesday").setValue(wed);
-                userData.child("thursday").setValue(thurs);
-                userData.child("friday").setValue(friday);
-                userData.child("saturday").setValue(saturday);
-                userData.child("sunday").setValue(sunday);
+                    Intent redirect = new Intent(EditBranchHours.this, EmployeeWelcome.class);
+                    startActivity(redirect);
 
-                Toast.makeText(getApplicationContext(), "Updating Branch Hours", Toast.LENGTH_LONG).show();
-
-                Intent redirect = new Intent(EditBranchHours.this, EmployeeWelcome.class);
-                startActivity(redirect);
-
+                }
             }
+            else    {
+                Toast.makeText(getApplicationContext(), "Invalid branch hours format entered", Toast.LENGTH_LONG).show();
+            }
+
+
         }
     }
 }
