@@ -130,6 +130,20 @@ public class ServiceRequest {
             sameFirstName = firstName.equals(request.getFirstName());
         }
 
+        boolean sameServiceName;
+        if (serviceName == null) {
+            sameServiceName = request.getServiceName() == null;
+        } else {
+            sameServiceName = serviceName.equals(request.getServiceName());
+        }
+
+        boolean sameCustomerUid;
+        if (customerUid == null) {
+            sameCustomerUid = request.getCustomerUid() == null;
+        } else {
+            sameCustomerUid = customerUid.equals(request.getCustomerUid());
+        }
+
         boolean sameLastName;
         if (lastName == null) {
             sameLastName = request.getLastName() == null;
@@ -178,7 +192,7 @@ public class ServiceRequest {
         } else {
             sameProofOfStatusPhotoUid = proofOfStatusUid.equals(request.getProofOfStatusUid());
         }
-        return (sameFirstName && sameLastName && sameAddress && sameDob && sameLicenseType && sameCustomerPhotoUid && sameProofOfResidencePhotoUid && sameProofOfStatusPhotoUid);
+        return (sameCustomerUid && sameServiceName && sameFirstName && sameLastName && sameAddress && sameDob && sameLicenseType && sameCustomerPhotoUid && sameProofOfResidencePhotoUid && sameProofOfStatusPhotoUid);
     }
 
 }
