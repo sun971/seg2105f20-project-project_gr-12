@@ -32,9 +32,9 @@ public class EditBranchHours extends AppCompatActivity {
     AutoCompleteTextView autocomplete6;
     AutoCompleteTextView autocomplete7;
 
-    String [] time = {"9:00 am - 6:00pm", "10:00am - 6:00pm", "11:00 am - 6:00pm", "12:00 pm - 6:00pm", "1:00pm - 6:00pm",
-            "2:00pm - 6:00pm","3:00pm - 6:00pm", "4:00 pm - 6:00pm", "5:00pm - 8:00pm", "6:00pm - 8:00pm", "7:00pm - 8:00pm",
-            "8:00pm - 12:00 am", "9:00pm - 12:00am", "10:00 pm - 12:00am", "Closed", "closed", "Holiday Hours"};
+    String [] time = {"9:00 - 18:00", "10:00 - 18:00", "11:00 - 18:00", "12:00 - 18:00", "13:00 - 18:00",
+            "14:00 - 10:00","15:00 - 10:00", "16:00 - 10:00", "17:00 - 20:00", "18:00 - 20:00", "19:00 - 20:00",
+            "20:00 - 24:00", "21:00 - 24:00", "22:00 - 24:00", "Closed", "closed", "Holiday Hours"};
 
     private FirebaseAuth session;
     private FirebaseDatabase mDatabase;
