@@ -192,7 +192,7 @@ public class ServiceRequest {
         } else {
             sameProofOfStatusPhotoUid = proofOfStatusUid.equals(request.getProofOfStatusUid());
         }
-        return (sameCustomerUid && sameServiceName && sameFirstName && sameLastName && sameAddress && sameDob && sameLicenseType && sameCustomerPhotoUid && sameProofOfResidencePhotoUid && sameProofOfStatusPhotoUid);
+        return (sameCustomerUid && sameServiceName && sameFirstName && sameLastName && sameAddress && sameDob && sameCustomerPhotoUid && sameProofOfResidencePhotoUid && sameProofOfStatusPhotoUid);
     }
 
 }

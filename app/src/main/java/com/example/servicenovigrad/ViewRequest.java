@@ -257,13 +257,14 @@ public class ViewRequest extends AppCompatActivity {
             licenseTypeText.setVisibility(View.GONE);
         } else {
             licenseTypeText.setVisibility(View.VISIBLE);
-            switch (licenseType) {
-                case G1:
-                    licenseTypeText.setText("License Type: G1");
-                case G2:
-                    licenseTypeText.setText("License Type: G2");
-                case G:
-                    licenseTypeText.setText("License Type: G");
+
+            if(licenseType == licenseType.G1){
+                licenseTypeText.setText("License Type: G1");
+            }else if (licenseType == licenseType.G2){
+                licenseTypeText.setText("License Type: G2");
+            }
+            else{
+                licenseTypeText.setText("License Type: G");
             }
 
         }

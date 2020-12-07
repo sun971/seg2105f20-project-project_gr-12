@@ -268,7 +268,7 @@ public class SubmitRequest extends AppCompatActivity {
         }
 
         String licenseTypeString = licenseSpinner.getSelectedItem().toString();
-        switch (licenseTypeString) {
+       /* switch (licenseTypeString) {
             case "G1":
                 licenseType = LicenseType.G1;
             case "G2":
@@ -277,6 +277,15 @@ public class SubmitRequest extends AppCompatActivity {
                 licenseType = LicenseType.G;
             default:
                 licenseType = null;
+        }*/
+        if(licenseTypeString.equals("G1")){
+            licenseType = LicenseType.G1;
+        }else if (licenseTypeString.equals("G2")){
+            licenseType = LicenseType.G2;
+        }else if (licenseTypeString.equals("G")){
+            licenseType = LicenseType.G;
+        }else{
+            licenseType = null;
         }
 
         if (photoUri != null) {
@@ -313,7 +322,8 @@ public class SubmitRequest extends AppCompatActivity {
 
                     dbReference.child("users").child(branchID).child("serviceRequests").setValue(requests);
                     Toast.makeText(getApplicationContext(), "Request Submitted", Toast.LENGTH_LONG).show();
-
+                    Intent intent = new Intent(SubmitRequest.this, WelcomePage.class);
+                    startActivity(intent);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
