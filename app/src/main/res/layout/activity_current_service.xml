@@ -40,7 +40,7 @@
         android:layout_marginTop="30dp"
         android:text="Current Services"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textSize="26sp" />
 
     <ListView
         android:id="@+id/listViewServices"
