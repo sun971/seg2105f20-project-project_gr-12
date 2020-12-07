@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ServicesOfGivenBranch extends AppCompatActivity {
@@ -85,22 +86,73 @@ public class ServicesOfGivenBranch extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        // Get branch ID
 
-
-        // Retrieve average rating
-        final RatingBar branchAverageRating = (RatingBar)findViewById(R.id.ratingBar4);
-        DatabaseReference getRating = db.getReference("users/"+branchID);
-        getRating.addValueEventListener(new ValueEventListener() {
+        databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("test","Accessed users");
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Log.d("test","New User");
+                    if (postSnapshot.child("accountType").getValue().toString().equals("employee")) {
+                        String childFirst = postSnapshot.child("firstName").getValue().toString();
+                        String childLast = postSnapshot.child("lastName").getValue().toString();
 
-                if(snapshot.hasChild("ratings"))  {
-                    branchAverageRating.setRating((float) 5.00);
-                }
-                else    {
-                    branchAverageRating.setRating((float) 0);
-                }
+                        Log.d("test","child first: " + childFirst);
+                        Log.d("test","child last: " + childLast);
+                        Log.d("test","Branch ID: " + branchID);
 
+                        if (branchFirst.equals(childFirst) && branchLast.equals(childLast)) {
+                            String branchIdentification = postSnapshot.child("uid").getValue().toString();
+
+
+                            // Retrieve average rating
+                            final RatingBar branchAverageRating = (RatingBar)findViewById(R.id.ratingBar4);
+                            DatabaseReference getRating = db.getReference("users/"+branchIdentification);
+                            getRating.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if(snapshot.hasChild("ratings"))  {
+
+
+
+                                        HashMap<String, ArrayList<String>> customerRatingEntries = new HashMap<>();
+
+                                        int counter = 0;
+
+                                        float averageRating = 0;
+
+                                        for(DataSnapshot ratingEntry: snapshot.child("ratings").getChildren())  {
+                                            //Log.d("RATING ENTRY", ratingEntry.toString());
+                                            GenericTypeIndicator<ArrayList<String>> ratingData = new GenericTypeIndicator<ArrayList<String>>() {};
+
+                                            ArrayList<String> databaseRatingEntry = ratingEntry.getValue(ratingData);
+
+                                            averageRating += Float.parseFloat(databaseRatingEntry.get(0));
+                                            counter += 1;
+                                            Log.d("RATING ENTRY", String.valueOf(averageRating));
+                                        }
+
+                                        averageRating = averageRating / counter;
+
+                                        branchAverageRating.setRating((float) averageRating);
+                                    }
+                                    else    {
+                                        branchAverageRating.setRating((float) 0);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.d("test", "CANCELLED");
+
+                                }
+                            });
+                        }
+                    }
+                }
             }
 
             @Override

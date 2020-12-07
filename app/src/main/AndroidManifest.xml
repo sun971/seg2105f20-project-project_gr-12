@@ -34,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RateBranch" />
         <activity android:name=".WelcomePage" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Signup" />

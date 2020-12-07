@@ -59,11 +59,7 @@ public class RateBranch extends AppCompatActivity {
 
                 if(snapshot.hasChild("ratings"))  {
 
-
-
                     HashMap<String, ArrayList<String>> customerRatingEntries = new HashMap<>();
-
-
 
                     for(DataSnapshot ratingEntry: snapshot.child("ratings").getChildren())  {
                         //Log.d("RATING ENTRY", ratingEntry.toString());
@@ -71,7 +67,7 @@ public class RateBranch extends AppCompatActivity {
 
                         ArrayList<String> databaseRatingEntry = ratingEntry.getValue(ratingData);
 
-                        customerRatingEntries.put(id, databaseRatingEntry);
+                        customerRatingEntries.put(ratingEntry.getKey(), databaseRatingEntry);
                         Log.d("RATING ENTRY", ratingEntry.toString());
                     }
 
